@@ -1,0 +1,19 @@
+# For LangChain support
+langchain
+
+# For Hugging Face models
+transformers
+
+# For Hugging Face Hub to load models
+huggingface_hub
+
+# For interacting with OpenAI models
+openai
+
+# For Llama models with cpp bindings
+llama-cpp-python
+
+sentence-transformers
+
+pandas
+
