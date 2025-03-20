@@ -1,78 +1,172 @@
-from sentence_transformers import SentenceTransformer, util
+
+
+import re
+from SPART.optimizer import PromptOptimizer
+from SPART.evaluator import PromptEvaluator
 import pandas as pd
-from concurrent.futures import ThreadPoolExecutor
 
-class Recommender:
-    def __init__(self, llm):
+class PromptRecommender:
+    def __init__(self, llm, auto_confirm=True):
         self.llm = llm
-        self.model = SentenceTransformer('all-MiniLM-L6-v2')
+        self.evaluator = PromptEvaluator(self.llm)
+        self.optimizer = PromptOptimizer(self.llm, auto_confirm=auto_confirm)
+        self.auto_confirm = auto_confirm
 
-    def _generate_similarity_score(self, input_data, desired_output, generalized_prompt):
-        # Create a recommended prompt specific to this input data
-        recommended_prompt = f'''
-            <|begin_of_text|><|start_header_id|>system<|end_header_id|>
-            You are a helpful AI assistant.
-            <|eot_id|><|start_header_id|>user<|end_header_id|>
-            1. {generalized_prompt}
-            2. {{input_data}} = {input_data}
-            3. Only return the desired output. Do not include any introductory or conclusive text.
-            <|eot_id|><|start_header_id|>assistant<|end_header_id|>
-        '''
+    def extract_prompt_from_xml(self, response_text):
+        match = re.search(r"<prompt>(.*?)</prompt>", response_text, re.DOTALL)
+        return match.group(1).strip() if match else response_text  
 
-        # Generate the output using the LLM for this specific input
-        prompt_output = self.llm(recommended_prompt)
+    def confirm_with_user(self, token_count):
+        if self.auto_confirm:
+            print(f"Auto-confirm: Proceeding with the token count of {token_count}")
+            return True
+        else:
+            print(f"The number of tokens being sent to the LLM is: {token_count}")
+            response = input("Do you want to proceed? (y/n): ").strip().lower()
+            return response == "y"
 
-        # Calculate similarity between the desired output and generated output
-        desired_embedding = self.model.encode(desired_output, convert_to_tensor=True)
-        prompt_embedding = self.model.encode(prompt_output, convert_to_tensor=True)
-        cosine_similarity = util.pytorch_cos_sim(desired_embedding, prompt_embedding).item()
+    def confirm_optimization_with_user(self):
+        if self.auto_confirm:
+            print("Auto-confirm: Proceeding with optimization.")
+            return True
+        else:
+            response = input("Optimization is recommended. Do you want to proceed with optimizing the prompt? (y/n): ").strip().lower()
+            return response == "y"
 
-        return cosine_similarity, prompt_output
-
-    def recommend(self, examples, no_of_iterations):
+    def recommend(self, examples, num_examples, context=None, similarity_threshold=0.8, max_iterations=3):
         dataframe = pd.DataFrame(examples)
-        input_column = dataframe.iloc[:, 0]
-        output_column = dataframe.iloc[:, 1]
+        
 
-        # Generate a generalized prompt
+        if num_examples > 0:
+            input_column_for_prompt = dataframe.iloc[:num_examples, 0]
+            output_column_for_prompt = dataframe.iloc[:num_examples, 1]
+            # Remaining data for evaluation
+            input_column_for_evaluation = dataframe.iloc[num_examples:, 0]  
+            output_column_for_evaluation = dataframe.iloc[num_examples:, 1]  
+        else:
+            input_column_for_prompt = []
+            output_column_for_prompt = []
+            input_column_for_evaluation = dataframe.iloc[:, 0]  
+            output_column_for_evaluation = dataframe.iloc[:, 1]  
+
+
+        context_prompt = f"\n**Context**: {context}" if context else ""
+
+        # ✅ Your original meta-prompt remains **unchanged**
         generalized_prompt = f'''
-            <|begin_of_text|><|start_header_id|>system<|end_header_id|>
-            Given input and output data, produce a detailed system prompt to guide a language model in completing the task effectively.
-            <|eot_id|><|start_header_id|>user<|end_header_id|>
-            1. Generate a generalized prompt that instructs an LLM to transform the given "Inputs" into the "Desired Outputs." Ensure the prompt is not overly specific to "Inputs," but is designed to reliably produce the exact "Desired Outputs". 
-            2. The format of the generated output should exactly match the "Desired Outputs", ensuring the structure is specific and exact to the example including, explicitly mentioning same special characters.
-            3. The recommended prompt should include a reference to the input variable {{input_data}}.
-            4. Do not include anything but the prompt.
-            5. Treat each row as a separate element in "Inputs" and "Desired Outputs"
-            Inputs: {input_column} 
-            Desired Outputs: {output_column}
-            <|eot_id|><|start_header_id|>assistant<|end_header_id|>
+            <system>
+
+                <role_definition>
+                    You are an AI that specializes in generating system prompts for transforming raw inputs into structured outputs. Given example input-output pairs, your task is to derive a precise and functional system prompt that correctly guides a language model to perform the transformation.
+                    Your goal is to infer the logic, rules, and structure that map inputs to outputs and construct a system prompt that accurately instructs an LLM to perform the same transformation on future data.
+                </role_definition>
+
+                <guidelines>
+                    - **Extract Transformation Logic**: Identify the key transformations applied to the input to produce the output.
+                    - **Generalize the Rule**: Ensure the generated system prompt captures the logic and structure of the transformation.
+                    - **Be Domain-Specific**: The transformation might involve summarization, formatting, classification, rewriting, extraction, or another process—ensure the system prompt aligns with this purpose.
+                    - **No Extra Explanation**: Do not describe the prompt-generation process; simply generate the system prompt that would perform the transformation.
+                    - **Context**: If context is provided in <context> make sure to use that piece of information to make the LLM understand the task
+                </guidelines>
+
+                ---
+
+                <instructions>
+                    1. **Objective**: Generate a system prompt that enables an LLM to transform raw "Inputs" into structured "Desired Outputs" using inferred transformation rules.
+                    2. **Derive Transformation Logic**: Analyze how the "Inputs" are being modified, formatted, or structured in the "Desired Outputs."
+                    3. **Generalization**: Construct a system prompt that would allow an LLM to perform this transformation consistently on unseen data.
+                    4. **Maintain Output Fidelity**: The generated system prompt should ensure outputs match the structure, format, and content of the provided "Desired Outputs" exactly.
+                    5. **Structure**: Be careful with defining the structure of the output, make sure it follows the same special characters as "Desired Outputs", do not add or remove elements of the format. Double-check the exact structure.
+                    6. **Prompt Skeleton**: You MUST use these tags as a base to build the transformation prompt: 
+                        <role_definition>(Describe the model's purpose (e.g., "You are an AI that specializes in...")</role_defintion>, 
+                        <guidelines>(High-level rules or principles for completing the task.)</guidelines>, 
+                        <instructions>(Detailed steps or actions the model should follow to complete the task)</instructions>, 
+                        <examples>(Show a short example inputs and expected outputs for the model)</examples>,
+                        <context>(Provide relevant background or details about the task or input data)</context>, 
+                        <user>(Provide the user’s actual request or input for the task)</user>
+                    7. **Wrap in `<prompt>` and '<system> Tags**: The final system prompt should be enclosed in `<prompt><system>...</system></prompt>` tags.
+                </instructions>
+
+                <examples>
+                    Inputs: `{input_column_for_prompt}`
+                    Desired Outputs: `{output_column_for_prompt}`
+                </examples>
+
+                <context>
+                    {context_prompt}
+                </context>
+
+                <user>
+                    Generate a system prompt that correctly transforms future instances of "Inputs" into the format of "Desired Outputs" using the inferred transformation logic. Make sure to follow the skeleton structure and enclose the entire prompt within the <prompt> tags.
+                </user>
+
+                <prompt>
+                    <system>
+                        (Generate the transformation prompt here)
+                    </system>
+                </prompt>
+
+            </system>
         '''
-        generated_prompt = self.llm(generalized_prompt)
 
-        all_iterations_results = []
+        token_count = self.evaluator.count_tokens(generalized_prompt)
+        if not self.confirm_with_user(token_count):
+            print("Process aborted by user.")
+            return None
 
-        def run_iteration():
-            similarity_scores = []
-            outputs = []
-            with ThreadPoolExecutor() as executor:
-                futures = [
-                    executor.submit(self._generate_similarity_score, input_data, desired_output, generated_prompt)
-                    for input_data, desired_output in zip(input_column, output_column)
-                ]
-                results = [future.result() for future in futures]
-                similarity_scores = [result[0] for result in results]
-                outputs = [result[1] for result in results]
+        response = self.llm(generalized_prompt)
+        generated_prompt = self.extract_prompt_from_xml(response)
 
-            average_similarity = sum(similarity_scores) / len(similarity_scores)
-            return {
-                'similarity': average_similarity,
-                'recommended_prompt': generated_prompt,
-                'prompt_outputs': outputs
-            }
+        avg_cosine_similarity, avg_rouge_score, outputs = self.evaluator.evaluate_similarity(
+            input_column_for_evaluation,  
+            output_column_for_evaluation,  
+            generated_prompt,
+            use_semantic_similarity=self.evaluator.use_semantic_similarity,
+            use_syntax_similarity=self.evaluator.use_syntax_similarity
+        )
 
-        # Execute n iterations in parallel
-        with ThreadPoolExecutor() as executor:
-            all_iterations_results = list(executor.map(lambda _: run_iteration(), range(no_of_iterations)))
+        recommendation = 'Recommended' if (
+            (self.evaluator.use_semantic_similarity and avg_cosine_similarity >= similarity_threshold) or
+            (self.evaluator.use_syntax_similarity and avg_rouge_score >= similarity_threshold)
+        ) else 'Optimize'
 
-        return all_iterations_results
+        # ✅ Always print evaluation results before returning
+        print("\n📊 **Evaluation Results:**")
+        print(f"🔹 **Semantic Similarity**: {avg_cosine_similarity}")
+        print(f"🔹 **Syntax Similarity**: {avg_rouge_score}")
+        print(f"📝 **Recommendation**: {recommendation}")
+
+        result = {
+            'semantic_similarity': avg_cosine_similarity,
+            'syntax_similarity': avg_rouge_score,
+            'recommended_prompt': generated_prompt,
+            'prompt_outputs': outputs,
+            'recommendation': recommendation
+        }
+
+        if result['recommendation'] == 'Optimize':
+            print("\n⚠️ **Optimization Recommended**")
+            if self.confirm_optimization_with_user():
+                print(f"🔄 Optimizing the prompt... (Max Attempts: {max_iterations})")
+                optimized_prompt, optimization_metrics = self.optimizer.optimise_prompt(
+                    generated_prompt, 
+                    input_column_for_evaluation,  
+                    output_column_for_evaluation,  
+                    num_examples,
+                    similarity_threshold,
+                    context=context,
+                    semantic_similarity=self.evaluator.use_semantic_similarity,
+                    syntactic_similarity=self.evaluator.use_syntax_similarity,
+                    max_iterations=max_iterations
+                )
+
+                print("\n✅ **Optimization Completed!**")
+                print(f"🔹 **Optimized Semantic Similarity**: {optimization_metrics['semantic_similarity']}")
+                print(f"🔹 **Optimized Syntax Similarity**: {optimization_metrics['syntactic_similarity']}")
+
+                result['optimized_prompt'] = optimized_prompt
+                result['optimization_metrics'] = optimization_metrics
+            else:
+                print("❌ **User declined optimization. Returning initial recommendation.**")
+
+        return result

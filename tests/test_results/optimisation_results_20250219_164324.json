@@ -1,0 +1,20 @@
+{
+    "original_prompt": "Do nothing.",
+    "optimised_prompt": "**Optimized Prompt:**\nExtract the name and age from each row of `input_data` and return the result in the format of \"Name: {name}, Age: {age}\".",
+    "similarity_metrics": {
+        "semantic_similarity": 0.9594980180263519,
+        "syntactic_similarity": 0.9333333333333333,
+        "evaluation_details": [
+            "Name: Faiz, Age: 21",
+            "Name: John, Age: 29",
+            "Sarah, 24",
+            "Name: Alice, Age: 35",
+            "Name: Robert, Age: 42",
+            "Name: Emily, Age: 19",
+            "Name: Alex, Age: 30",
+            "Name: Sophia, Age: 27",
+            "Name: Liam, Age: 22",
+            "Ethan, 25"
+        ]
+    }
+}

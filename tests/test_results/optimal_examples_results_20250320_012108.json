@@ -1,0 +1,46 @@
+[
+    {
+        "num_examples": 0,
+        "syntactic_similarity": 0.5521904133415012
+    },
+    {
+        "num_examples": 1,
+        "syntactic_similarity": 0.9447691118167887
+    },
+    {
+        "num_examples": 2,
+        "syntactic_similarity": 0.945404678063358
+    },
+    {
+        "num_examples": 3,
+        "syntactic_similarity": 0.9351896445199038
+    },
+    {
+        "num_examples": 4,
+        "syntactic_similarity": 0.9038325925851772
+    },
+    {
+        "num_examples": 5,
+        "syntactic_similarity": 0.9503872230608291
+    },
+    {
+        "num_examples": 6,
+        "syntactic_similarity": 0.9292156647050949
+    },
+    {
+        "num_examples": 7,
+        "syntactic_similarity": 0.7633547406523586
+    },
+    {
+        "num_examples": 8,
+        "syntactic_similarity": 0.7936645421477196
+    },
+    {
+        "num_examples": 9,
+        "syntactic_similarity": 0.25183178937364087
+    },
+    {
+        "num_examples": 10,
+        "syntactic_similarity": 0.36424340979506165
+    }
+]
