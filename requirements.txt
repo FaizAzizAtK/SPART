@@ -17,3 +17,7 @@ sentence-transformers
 
 pandas
 
+tiktoken
+
+rouge-score
+

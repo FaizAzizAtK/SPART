@@ -1,0 +1,20 @@
+{
+    "original_prompt": "Extract named entities and classify them (Person, Location, Organization, etc.).",
+    "optimised_prompt": "<instructions>\n    Extract named entities from the following text and classify them into the categories: <entity>Person</entity>, <entity>Location</entity>, and <entity>Organization</entity>.\n  </instructions>\n  <context>\n    The text contains discussions regarding consumer safety in relation to British lamb amidst concerns of mad cow disease, with specific individuals and organizations mentioned.\n  </context>\n  <steps>\n    1. Identify all named entities within the given text.\n    2. Classify each entity into one of the following categories: <entity>Person</entity>, <entity>Location</entity>, or <entity>Organization</entity>.\n  </steps>\n  <example>\n    Input: \"EU rejects German call to boycott British lamb. Peter Blackburn BRUSSELS.\"\n    Output: \n      - Person: \"Peter Blackburn\"\n      - Location: \"BRUSSELS\"\n      - Organization: \"EU\"\n  </example>",
+    "similarity_metrics": {
+        "semantic_similarity": 0.39179693162441254,
+        "syntactic_similarity": 0.03308229977747022,
+        "evaluation_details": [
+            "- Person: \"Lien Chan\", \"Shen Guofang\", \"Tang Shubei\"\n- Location: \"Taiwan\", \"BEIJING\", \"Ukraine\"\n- Organization: \"People's Daily\", \"China\"",
+            "- Person: \"Tang Shubei\"\n- Location: \"BEIJING\", \"Taiwan\"\n- Organization: \"Xinhua\", \"Association for Relations Across the Taiwan Straits\"",
+            "- Person: None\n- Location: \"FRANKFURT\", \"Germany\"\n- Organization: \"Federal office for motor vehicles\", \"Volkswagen AG\", \"Opel AG\", \"General Motors\", \"Ford\", \"Seat\", \"Porsche\"",
+            "- Person: \"Costas Simitis\", \"Costas Skandalidis\", \"Dimitris Kontogiannis\"\n- Location: \"ATHENS\"\n- Organization: \"Greek socialist party\"",
+            "- Person: \"BayerVB\"\n- Location: \"LONDON\"\n- Organization: \"BAYERISCHE VEREINSBANK\", \"Toronto Dominion\"",
+            "- Person: \"Venantius\"\n- Location: \"LONDON\"\n- Organization: \"Lehman Brothers International\", \"VENANTIUS AB\", \"SWEDISH NATIONAL MORTGAGE AGENCY\"",
+            "- Person: None\n- Location: \"Syria\", \"LATTAKIA\", \"Lattakia\", \"Tartous\"\n- Organization: \"Lloyds Shipping\", \"Lloyds Shipping Intelligence Service\"",
+            "- Person: \"Colleen Siegel\"\n- Person: \"Itamar Rabinovich\"\n- Person: \"Eliahu Ben-Elissar\"\n- Person: \"Hafez al-Assad\"\n- Person: \"David Levy\"\n- Person: \"Benjamin Netanyahu\"\n- Location: \"Israel\"\n- Location: \"Syria\"\n- Location: \"Washington\"\n- Location: \"Golan Heights\"\n- Organization: \"Likud party\"",
+            "- Person: \"Tadeusz Awdankiewicz\"\n- Location: \"Libya\", \"TUNIS\", \"Tripoli\", \"Poland\"\n- Organization: \"Polish embassy\", \"Reuters\", \"Poland's labour ministry\"",
+            "- Person: \"Hassan Hafidh\", \"Massoud Rajavi\", \"Hassan Rastegar\"\n- Location: \"Baghdad\", \"Iran\", \"Iraq\", \"Kurdistan\", \"Suleimaniya\", \"northern Iraq\", \"southern Turkey\"\n- Organization: \"Mujahideen Khalq\", \"Kurdistan Democratic Party of Iran (KDPI)\", \"Iraqi Kurdish Patriotic Union of Kurdistan (PUK)\", \"Kurdistan Democratic Party (KDP)\""
+        ]
+    }
+}

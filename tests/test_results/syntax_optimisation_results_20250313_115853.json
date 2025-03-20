@@ -1,0 +1,16 @@
+{
+    "original_prompt": "Extract named entities and classify them (Person, Location, Organization, etc.).",
+    "optimised_prompt": "Extract named entities and classify them (Person, Location, Organization, etc.).",
+    "similarity_metrics": {
+        "semantic_similarity": 0.45153607428073883,
+        "syntactic_similarity": 0.031820254490784815,
+        "evaluation_details": [
+            "Here is the extracted named entity classification:\n\n1. **Person**:\n\t* Peter Blackburn\n\t* Werner Zwingmann\n\t* Nikolaus van der Pas\n\t* Franz Fischler\n\t* Loyola de Palacio\n\t* John Lloyd Jones\n2. **Location**:\n\t* Brussels\n\t* Britain\n\t* Germany\n\t* Europe\n3. **Organization**:\n\t* European Commission\n\t* European Union (EU)\n\t* Welsh National Farmers' Union (NFU)\n4. **Date**:\n\t* 1996-08-22",
+            "Here are the extracted entities with their corresponding classifications:\n\n1. **Person**:\n\t* Jimi Hendrix (musician)\n\t* Kathy Etchingham (Hendrix's former girlfriend)\n2. **Location**:\n\t* London\n\t* Florida\n\t* Nottingham\n3. **Organization**:\n\t* None\n4. **Event**:\n\t* Concert in January 1967\n5. **Date**:\n\t* 1996-08-22 (auction date)\n\t* 1966 (year Hendrix penned the song draft)\n\t* 1969 (year Hendrix ended his relationship with Etchingham)\n\t* 1970 (year Hendrix died)",
+            "Here are the named entities extracted and classified:\n\n1. **Person**:\n\t* Shen Guofang (Foreign Ministry spokesman)\n\t* Lien Chan (Taiwanese Vice President)\n\t* Tang Shubei (China's top negotiator with Taipei)\n2. **Location**:\n\t* China\n\t* Taiwan\n\t* Beijing\n\t* Ukraine\n3. **Organization**:\n\t* Reuters\n\t* People's Daily (Chinese state media)\n4. **Date**:\n\t* 1996-08-22",
+            "**Named Entities:**\n\n1. **Person**\n\t* Tang Shubei\n2. **Location**\n\t* China\n\t* Taiwan\n\t* Beijing\n3. **Organization**\n\t* Association for Relations Across the Taiwan Straits\n4. **Date**\n\t* 1996-08-22",
+            "Here are the extracted named entities classified by category:\n\n* **Person:**\n\t+ None\n* **Location:**\n\t+ Germany\n\t+ Frankfurt\n* **Organization:**\n\t+ Federal office for motor vehicles\n\t+ Volkswagen AG\n\t+ Opel AG\n\t+ General Motors\n\t+ Seat\n\t+ Porsche\n* **Date:**\n\t+ 1996-08-22\n\t+ July 1995\n\t+ July 1996",
+            "**Named Entities:**\n\n1. **Person**:\n\t* Costas Simitis (Prime Minister)\n\t* Costas Skandalidis (general secretary of Greek socialist party)\n2. **Location**:\n\t* Athens\n3. **Organization**:\n\t* Greek socialist party\n4. **Date**:\n\t* 1996-08-22"
+        ]
+    }
+}
