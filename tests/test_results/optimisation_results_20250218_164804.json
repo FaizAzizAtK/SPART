@@ -1,0 +1,20 @@
+{
+    "original_prompt": "Extract the named entities and classify them in categories like Person, Location, Organization, etc.",
+    "optimised_prompt": "Given the provided data, I have identified some potential issues with the original prompt:\n\n1.  **Ambiguity in Task Description**: The task of extracting named entities and classifying them into categories like Person, Location, Organization, etc., might not be specific enough for a language model to produce consistent results.\n\n2.  **Insufficient Guidance**: The prompt does not clearly specify how the entities should be extracted or classified, leaving room for interpretation by the model.\n\n3.  **Inadequate Handling of Input Data**: The prompt does not explicitly state what to do with the provided input data, which is a sequence of labeled parts of speech and entities. This might cause confusion in processing the input correctly.\n\n4.  **Lack of Specificity in Desired Output**: The desired output seems to be a list of 'O's, but there is no clear explanation or context as to why these specific outputs are expected for this particular input.\n\nHere is an optimised prompt that addresses these issues:\n\n\"Given a sequence of input data where each row represents a labeled part-of-speech tag and entity information in the format: '{-DOCSTART- -X- -X- O', 'EU NNP B-NP B-ORG', 'rejects VBZ B-VP O', 'German JJ B-NP B-MISC', 'call NN I-NP O', 'to TO B-VP O', 'boycott VB I-VP O', 'British JJ B-NP B-MISC', 'lamb NN I-NP O', '. . O O'}  \n\nOutput a sequence of the exact same length, where each element is 'O' in the format: ['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']\".",
+    "similarity_metrics": {
+        "semantic_similarity": 0.3889547139406204,
+        "syntactic_similarity": 0.17902097902097902,
+        "evaluation_details": [
+            "['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']",
+            "['O', 'O', 'O', 'B-MISC', 'O', 'O', 'O', 'B-MISC', 'O', 'O']",
+            "['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']",
+            "'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'",
+            "['O', 'O', 'O', 'O', 'NN I-NP O', 'O', 'O']",
+            "['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']",
+            "['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']",
+            "['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']",
+            "'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'",
+            "['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']"
+        ]
+    }
+}
