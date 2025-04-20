@@ -44,4 +44,3 @@ def connect_local_llm(model_name):
         callable: A function that takes a prompt and calls the specified model.
     """
     return lambda prompt: prompt_llm(prompt, model_name=model_name)
-
