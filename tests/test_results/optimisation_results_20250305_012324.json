@@ -1,6 +1,6 @@
 {
     "original_prompt": "Do nothing.",
-    "optimised_prompt": "Extract name and age from each input string and format into 'Name: [name], Age: [age]'. For example, given 'My name is Faiz and I am 21', return 'Name: Faiz, Age: 21'.\nProcess each row in the `input_data` independently, preserving all special characters, syntax, and spacing.\nThe output should exactly match the format of the \"Desired Outputs\", with no deviations or omissions.",
+    "optimized_prompt": "Extract name and age from each input string and format into 'Name: [name], Age: [age]'. For example, given 'My name is Faiz and I am 21', return 'Name: Faiz, Age: 21'.\nProcess each row in the `input_data` independently, preserving all special characters, syntax, and spacing.\nThe output should exactly match the format of the \"Desired Outputs\", with no deviations or omissions.",
     "similarity_metrics": {
         "semantic_similarity": 0.8447646567454705,
         "syntactic_similarity": 0.7696073118678695,

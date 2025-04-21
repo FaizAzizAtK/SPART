@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract the names and ages from the inputes in the format \"Name: {{name}}, Age: {{age}}\"",
-    "optimised_prompt": "Extract names and ages from each input string in the \"input_data\" and format them as \"Name: {{name}}, Age: {{age}}\", but do so while preserving all original special characters, syntax, and spacing. Process each row independently to produce a list of structured strings matching the exact format of the \"Desired Outputs\".",
+    "optimized_prompt": "Extract names and ages from each input string in the \"input_data\" and format them as \"Name: {{name}}, Age: {{age}}\", but do so while preserving all original special characters, syntax, and spacing. Process each row independently to produce a list of structured strings matching the exact format of the \"Desired Outputs\".",
     "similarity_metrics": {
         "semantic_similarity": 0.9593844281302558,
         "syntactic_similarity": 0.9018943233504637,

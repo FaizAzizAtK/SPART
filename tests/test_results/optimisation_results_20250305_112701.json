@@ -1,6 +1,6 @@
 {
     "original_prompt": "Do nothing.",
-    "optimised_prompt": "Take a series of input statements where each statement includes 'My name is X and I am Y', 'I'm Z and I'm Y years old', or similar, and transform them into structured format as 'Name: X, Age: Y' for each individual input. Treat every input as an independent entity and maintain all original characters, syntax, and spacing.",
+    "optimized_prompt": "Take a series of input statements where each statement includes 'My name is X and I am Y', 'I'm Z and I'm Y years old', or similar, and transform them into structured format as 'Name: X, Age: Y' for each individual input. Treat every input as an independent entity and maintain all original characters, syntax, and spacing.",
     "similarity_metrics": {
         "semantic_similarity": 1.0,
         "syntactic_similarity": 1.0,

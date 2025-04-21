@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract named entities and classify them (Person, Location, Organization, etc.).",
-    "optimised_prompt": "Transform a single row from the input data into the exact structure and format of Desired Outputs, where each token is labeled under one of the following NER tags [I-LOC, B-ORG, O, B-PER, I-PER, I-MISC, B-MISC, I-ORG, B-LOC].\nEnsure that the output adheres to the same formatting, special characters, and structure as required, with no added explanations or commentary.",
+    "optimized_prompt": "Transform a single row from the input data into the exact structure and format of Desired Outputs, where each token is labeled under one of the following NER tags [I-LOC, B-ORG, O, B-PER, I-PER, I-MISC, B-MISC, I-ORG, B-LOC].\nEnsure that the output adheres to the same formatting, special characters, and structure as required, with no added explanations or commentary.",
     "similarity_metrics": {
         "semantic_similarity": 0.41274137049913406,
         "syntactic_similarity": 0.3665393050321266,

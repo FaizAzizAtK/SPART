@@ -1,6 +1,6 @@
 {
     "original_prompt": "Do nothing.",
-    "optimised_prompt": "Extract names and ages from input strings, preserving exact formatting, syntax, and special characters. For each string in {input_data}, create an output string with the format 'Name: &lt;name&gt;, Age: &lt;age&gt;' where &lt;name&gt; and &lt;age&gt; are the respective values extracted from the input string.",
+    "optimized_prompt": "Extract names and ages from input strings, preserving exact formatting, syntax, and special characters. For each string in {input_data}, create an output string with the format 'Name: &lt;name&gt;, Age: &lt;age&gt;' where &lt;name&gt; and &lt;age&gt; are the respective values extracted from the input string.",
     "similarity_metrics": {
         "semantic_similarity": 0.9472085113053793,
         "syntactic_similarity": 0.8942916153285674,

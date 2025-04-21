@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract the named entities and classify them in categories like Person, Location, Organization, etc.",
-    "optimised_prompt": "**Optimized Prompt:**\n\n\"Process each row of input_data independently. For each row, identify and extract named entities and classify them into categories (Person, Location, Organization, etc.). Return the processed output in the exact format and structure as specified in Desired Outputs.\"",
+    "optimized_prompt": "**Optimized Prompt:**\n\n\"Process each row of input_data independently. For each row, identify and extract named entities and classify them into categories (Person, Location, Organization, etc.). Return the processed output in the exact format and structure as specified in Desired Outputs.\"",
     "similarity_metrics": {
         "semantic_similarity": 0.08162955064326524,
         "syntactic_similarity": 0.037118695258230146,

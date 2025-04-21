@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract named entities and classify them (Person, Location, Organization, etc.).",
-    "optimised_prompt": "Transform each row of {input_data} into a string format that matches the output in \"Desired Outputs\" exactly. Each token should have its corresponding NER tag as described in the context.\nInput:\n[[\"Token1\", \"Tag1\"], [\"Token2\", \"Tag2\"]]\nOutput:\n{string_output}",
+    "optimized_prompt": "Transform each row of {input_data} into a string format that matches the output in \"Desired Outputs\" exactly. Each token should have its corresponding NER tag as described in the context.\nInput:\n[[\"Token1\", \"Tag1\"], [\"Token2\", \"Tag2\"]]\nOutput:\n{string_output}",
     "similarity_metrics": {
         "semantic_similarity": 0.535905510187149,
         "syntactic_similarity": 0.4200786587569698,

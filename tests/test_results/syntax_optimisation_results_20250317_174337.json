@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract named entities and classify the tokens a under one of the following labels [I-LOC, B-ORG, O, B-PER, I-PER, I-MISC, B-MISC, I-ORG, B-LOC]. The format should be [\"Token\": \"India\", \"NER_tag\": \"B-LOC\", ..., ...]",
-    "optimised_prompt": "Transform the following raw input into a structured news headline and summary. The headline should capture the main point of the news, and the summary should include relevant details, such as the who, what, when, and where. Format the output as 'Headline: [headline text]. Summary: [summary text]'. Input: {input_text}",
+    "optimized_prompt": "Transform the following raw input into a structured news headline and summary. The headline should capture the main point of the news, and the summary should include relevant details, such as the who, what, when, and where. Format the output as 'Headline: [headline text]. Summary: [summary text]'. Input: {input_text}",
     "similarity_metrics": {
         "semantic_similarity": 0.27596737891435624,
         "syntactic_similarity": 0.08815263795560527,

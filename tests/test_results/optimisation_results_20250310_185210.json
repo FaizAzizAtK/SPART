@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract the names and ages from the inputes in the format \"Name: {{name}}, Age: {{age}}\"",
-    "optimised_prompt": "Extract names and ages from each input string in '{input_data}' and return them as a list of strings, formatted as 'Name: {name}, Age: {age}'. Process each input independently.",
+    "optimized_prompt": "Extract names and ages from each input string in '{input_data}' and return them as a list of strings, formatted as 'Name: {name}, Age: {age}'. Process each input independently.",
     "similarity_metrics": {
         "semantic_similarity": 0.8652299099498325,
         "syntactic_similarity": 0.7688781593833818,
