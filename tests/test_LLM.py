@@ -2,7 +2,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 from dotenv import load_dotenv
-from SPART.llm_connector import LLMConnector
+from SPART.external_llm_connector import LLMConnector
 
 # Load environment variables from .env file
 load_dotenv()
