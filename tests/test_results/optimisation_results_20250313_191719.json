@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract the names and ages from the inputes in the format \"Name: {{name}}, Age: {{age}}\"",
-    "optimised_prompt": "<prompt>\nTransform input sentences into a structured output format with names and ages as specified in \"Desired Outputs.\"\n<steps>\n1. Tokenize each sentence into individual words.\n2. Identify keywords for names (e.g., \"name,\" \"is,\" \"called\") and ages (e.g., \"age,\" \"years old\").\n3. Extract the name by looking for phrases preceded by keywords like \"my name is\" or \"I'm called.\"\n4. Extract the age by identifying phrases containing numbers and words related to age.\n5. Format the output into a structured string: \"Name: {name}, Age: {age}\"\n</steps>",
+    "optimized_prompt": "<prompt>\nTransform input sentences into a structured output format with names and ages as specified in \"Desired Outputs.\"\n<steps>\n1. Tokenize each sentence into individual words.\n2. Identify keywords for names (e.g., \"name,\" \"is,\" \"called\") and ages (e.g., \"age,\" \"years old\").\n3. Extract the name by looking for phrases preceded by keywords like \"my name is\" or \"I'm called.\"\n4. Extract the age by identifying phrases containing numbers and words related to age.\n5. Format the output into a structured string: \"Name: {name}, Age: {age}\"\n</steps>",
     "similarity_metrics": {
         "semantic_similarity": 0.9974524550967746,
         "syntactic_similarity": 0.9968253968253967,

@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract the names and ages from the inputes in the format \"Name: {{name}}, Age: {{age}}\"",
-    "optimised_prompt": "Given a list of strings where each string represents a person stating their name and age, extract the names and ages into a structured format \"Name: {{name}}, Age: {{age}}\" for each input individually.",
+    "optimized_prompt": "Given a list of strings where each string represents a person stating their name and age, extract the names and ages into a structured format \"Name: {{name}}, Age: {{age}}\" for each input individually.",
     "similarity_metrics": {
         "semantic_similarity": 0.9497978303167555,
         "syntactic_similarity": 0.9059904026022647,

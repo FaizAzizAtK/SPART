@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract named entities and classify the tokens a under one of the following labels [I-LOC, B-ORG, O, B-PER, I-PER, I-MISC, B-MISC, I-ORG, B-LOC]. The format should be [\"Token\": \"India\", \"NER_tag\": \"B-LOC\", ..., ...]",
-    "optimised_prompt": "Transform the following input text into a structured summary consisting of a headline and key points. The headline should capture the main topic, and the key points should clearly outline the important details without personal opinions or extraneous information. Format the output exactly as shown in the example below:\n\nHeadline: [Main Topic]\n1. [Key Point 1]\n2. [Key Point 2]\n3. [Key Point 3]\n...\nEnd\n\nNow, apply this format to the input: {Input}",
+    "optimized_prompt": "Transform the following input text into a structured summary consisting of a headline and key points. The headline should capture the main topic, and the key points should clearly outline the important details without personal opinions or extraneous information. Format the output exactly as shown in the example below:\n\nHeadline: [Main Topic]\n1. [Key Point 1]\n2. [Key Point 2]\n3. [Key Point 3]\n...\nEnd\n\nNow, apply this format to the input: {Input}",
     "similarity_metrics": {
         "semantic_similarity": 0.3027206689119339,
         "syntactic_similarity": 0.10902228415535083,

@@ -1,6 +1,6 @@
 {
     "original_prompt": "Do nothing.",
-    "optimised_prompt": "Extract 'Name' and 'Age' from each string in {input_data}, and format them into the exact structure of 'Name: John, Age: 29'. Each output should have a comma after the name, a colon before and after 'Age', and maintain original spacing and punctuation.",
+    "optimized_prompt": "Extract 'Name' and 'Age' from each string in {input_data}, and format them into the exact structure of 'Name: John, Age: 29'. Each output should have a comma after the name, a colon before and after 'Age', and maintain original spacing and punctuation.",
     "similarity_metrics": {
         "semantic_similarity": 0.9317038667083967,
         "syntactic_similarity": 0.8725240538581703,

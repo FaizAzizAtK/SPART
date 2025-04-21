@@ -1,6 +1,6 @@
 {
     "original_prompt": "Do nothing.",
-    "optimised_prompt": "Process each row of {input_data} independently to generate a structured classification in the exact format of \"Desired Outputs\". For each input statement, identify the name and age, and concatenate them into the desired string with the format 'Name: [name], Age: [age]'. Maintain all special characters, syntax, and spacing.",
+    "optimized_prompt": "Process each row of {input_data} independently to generate a structured classification in the exact format of \"Desired Outputs\". For each input statement, identify the name and age, and concatenate them into the desired string with the format 'Name: [name], Age: [age]'. Maintain all special characters, syntax, and spacing.",
     "similarity_metrics": {
         "semantic_similarity": 0.9899853958023919,
         "syntactic_similarity": 0.9757575757575757,

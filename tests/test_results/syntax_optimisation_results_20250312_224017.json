@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract named entities and classify them (Person, Location, Organization, etc.).",
-    "optimised_prompt": "Generate a list of objects with tokens as keys and their corresponding NER labels as values for the given input data.",
+    "optimized_prompt": "Generate a list of objects with tokens as keys and their corresponding NER labels as values for the given input data.",
     "similarity_metrics": {
         "semantic_similarity": 0.6342649459838867,
         "syntactic_similarity": 0.22767303926115876,

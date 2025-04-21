@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract named entities and classify the tokens a under one of the following labels [I-LOC, B-ORG, O, B-PER, I-PER, I-MISC, B-MISC, I-ORG, B-LOC]. The format should be [\"Token\": \"India\", \"NER_tag\": \"B-LOC\", ..., ...]",
-    "optimised_prompt": "<system>Extract named entities from the provided text and classify each token under one of the following labels: [I-LOC, B-ORG, O, B-PER, I-PER, I-MISC, B-MISC, I-ORG, B-LOC]. The output format should be a list of dictionaries, where each dictionary contains the token and its corresponding NER tag in the following structure: [\"Token\": \"example_token\", \"NER_tag\": \"example_tag\", ...]. Ensure that the output maintains this exact structure and includes all identified tokens and their labels.</system>",
+    "optimized_prompt": "<system>Extract named entities from the provided text and classify each token under one of the following labels: [I-LOC, B-ORG, O, B-PER, I-PER, I-MISC, B-MISC, I-ORG, B-LOC]. The output format should be a list of dictionaries, where each dictionary contains the token and its corresponding NER tag in the following structure: [\"Token\": \"example_token\", \"NER_tag\": \"example_tag\", ...]. Ensure that the output maintains this exact structure and includes all identified tokens and their labels.</system>",
     "similarity_metrics": {
         "semantic_similarity": 0.7343356940481398,
         "syntactic_similarity": 0.6624702509003964,

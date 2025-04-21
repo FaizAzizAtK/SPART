@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract named entities and classify them (Person, Location, Organization, etc.).",
-    "optimised_prompt": "Extract named entities and classify them (Person, Location, Organization, etc.).",
+    "optimized_prompt": "Extract named entities and classify them (Person, Location, Organization, etc.).",
     "similarity_metrics": {
         "semantic_similarity": 0.40817901740471524,
         "syntactic_similarity": 0.04486969816603991,
