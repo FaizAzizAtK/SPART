@@ -66,10 +66,10 @@ def reformat_and_print():
 
     # Print only the first document's data for verification
     print("\n---- First Document (Raw Text) ----\n")
-    print(raw_texts[0])  # Print first document
+    print(raw_texts[4])  # Print first document
 
     print("\n---- First Document (Formatted Tokens) ----\n")
-    print(formatted_results[0])  # Print first document's formatted results
+    print(formatted_results[4])  # Print first document's formatted results
 
 
 if __name__ == "__main__":
