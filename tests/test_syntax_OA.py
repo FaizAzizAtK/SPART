@@ -9,10 +9,10 @@ from datetime import datetime
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 from SPART.recommender import PromptRecommender
-from SPART.llm_connector import LLMConnector
+from SPART.external_llm_connector import ExternalLLMConnector
 from SPART.optimizer import PromptOptimizer
 
-os.environ['MallocStackLogging'] = '0'  # Prevent memory issues
+os.environ.pop("MallocStackLogging", None)
 
 load_dotenv()
 
@@ -58,7 +58,7 @@ class TestPromptOptimization(unittest.TestCase):
         api_key = os.getenv("OPENAI_API_KEY")
 
         # Initialize a local LLM connector for testing
-        cls.llm = LLMConnector(provider="openai", model_name="gpt-4o-mini", api_key=api_key)
+        cls.llm = ExternalLLMConnector(provider="openai", model_name="gpt-4o-mini", api_key=api_key, token_limit=30000)
         cls.recommender = PromptRecommender(cls.llm)
         cls.optimizer = PromptOptimizer(cls.llm)
 
@@ -89,8 +89,11 @@ class TestPromptOptimization(unittest.TestCase):
         num_examples = 4
         context = "Input data is raw tokenized text, and the desired output consists of tokens with their Named Entity Recognition label. The Tokens are labeled under one of the following labels [I-LOC, B-ORG, O, B-PER, I-PER, I-MISC, B-MISC, I-ORG, B-LOC]. The goal is to label all the tokens with its NER label"
         threshold = 0.95
+        max_iterations = 3
+        semantic_similarity = False
+        syntactic_similarity = True
 
-        results = self.recommender.recommend(examples, num_examples, context, threshold)
+        results = self.recommender.recommend(examples, num_examples, context, threshold, max_iterations, semantic_similarity, syntactic_similarity)
 
         file_path = os.path.join(self.results_dir, f"syntax_recommend_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
         with open(file_path, "w") as json_file:
@@ -102,26 +105,38 @@ class TestPromptOptimization(unittest.TestCase):
     def test_optimisation(self):
         """Test the optimization process for the NER task and save results."""
         print("\n### Running Optimisation Test ###")
-        generated_prompt = "Extract named entities and classify the tokens a under one of the following labels [I-LOC, B-ORG, O, B-PER, I-PER, I-MISC, B-MISC, I-ORG, B-LOC]. The format should be [\"Token\": \"India\", \"NER_tag\": \"B-LOC\", ..., ...]"
-        input_data = self.data["input_data"]
-        desired_output = self.data["desired_output"]
+        generated_prompt = "Extract named entities and classify the tokens a under one of the following labels [I-LOC, B-ORG, O, B-PER, I-PER, I-MISC, B-MISC, I-ORG, B-LOC]. The format should be [\"Token: India, NER_tag: B-LOC\", ..., ...]"
+        examples = [{"input_data": i, "desired_output": o} for i, o in zip(self.data["input_data"], self.data["desired_output"])]
         num_examples = 4
         context = "Input data is raw tokenized text, and the desired output consists of tokens with their Named Entity Recognition label. The Tokens are labeled under one of the following labels [I-LOC, B-ORG, O, B-PER, I-PER, I-MISC, B-MISC, I-ORG, B-LOC]. The goal is to label all the tokens with its NER label"
         threshold = 0.95
+        max_iterations = 5
+        semantic_similarity = False
+        syntactic_similarity = True
 
-        optimised_prompt, similarity_metrics = self.optimizer.optimise_prompt(
+        results_dict = self.optimizer.optimize_prompt(
             generated_prompt,
-            input_data,
-            desired_output,
+            examples,
             num_examples,
             threshold,
             context,
-            max_iterations=5
+            max_iterations,
+            semantic_similarity, 
+            syntactic_similarity
         )
 
+        # Extract values from the returned dictionary
+        optimized_prompt = results_dict["optimized_prompt"]
+        similarity_metrics = {
+            "semantic_similarity": results_dict["semantic_similarity"],
+            "syntactic_similarity": results_dict["syntactic_similarity"],
+            "evaluation_details": results_dict["evaluation_details"]
+        }
+
+        # Structure the final results dictionary for easy access
         results = {
             "original_prompt": generated_prompt,
-            "optimised_prompt": optimised_prompt,
+            "optimized_prompt": optimized_prompt,
             "similarity_metrics": similarity_metrics,
         }
 
@@ -130,7 +145,7 @@ class TestPromptOptimization(unittest.TestCase):
             json.dump(results, json_file, indent=4)
 
         print(f"Optimisation test results saved to: {file_path}")
-        self.assertIsNotNone(optimised_prompt, "Optimization returned no prompt.")
+        self.assertIsNotNone(optimized_prompt, "Optimization returned no prompt.")
         self.assertTrue("semantic_similarity" in similarity_metrics and "syntactic_similarity" in similarity_metrics,
                         "Similarity metrics are incomplete.")
 

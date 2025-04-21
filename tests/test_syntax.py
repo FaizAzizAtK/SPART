@@ -8,7 +8,7 @@ from datetime import datetime
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 from SPART.recommender import PromptRecommender
-from SPART.local_llm_connector import connect_local_llm
+from SPART.local_llm_connector import LocalLLMConnector
 from SPART.optimizer import PromptOptimizer
 
 os.environ['MallocStackLogging'] = '0'  # Prevent memory issues
@@ -55,7 +55,7 @@ class TestPromptOptimization(unittest.TestCase):
         os.makedirs(cls.results_dir, exist_ok=True)
 
         # Initialize a local LLM connector for testing
-        cls.llm = connect_local_llm("llama3.1")
+        cls.llm = LocalLLMConnector.connect_local_llm("llama3.1")
         cls.recommender = PromptRecommender(cls.llm)
         cls.optimizer = PromptOptimizer(cls.llm)
 
@@ -105,7 +105,7 @@ class TestPromptOptimization(unittest.TestCase):
         context = "Input data is raw tokenized text, and the desired output consists of tokens with their Named Entity Recognition label. The Tokens are labeled under one of the following labels [I-LOC, B-ORG, O, B-PER, I-PER, I-MISC, B-MISC, I-ORG, B-LOC]. The goal is to label all the tokens with its NER label"
         threshold = 0.9
 
-        optimised_prompt, similarity_metrics = self.optimizer.optimise_prompt(
+        optimized_prompt, similarity_metrics = self.optimizer.optimize_prompt(
             generated_prompt,
             input_data,
             desired_output,
@@ -116,7 +116,7 @@ class TestPromptOptimization(unittest.TestCase):
 
         results = {
             "original_prompt": generated_prompt,
-            "optimised_prompt": optimised_prompt,
+            "optimized_prompt": optimized_prompt,
             "similarity_metrics": similarity_metrics,
         }
 
@@ -125,7 +125,7 @@ class TestPromptOptimization(unittest.TestCase):
             json.dump(results, json_file, indent=4)
 
         print(f"Optimisation test results saved to: {file_path}")
-        self.assertIsNotNone(optimised_prompt, "Optimization returned no prompt.")
+        self.assertIsNotNone(optimized_prompt, "Optimization returned no prompt.")
         self.assertTrue("semantic_similarity" in similarity_metrics and "syntactic_similarity" in similarity_metrics,
                         "Similarity metrics are incomplete.")
 

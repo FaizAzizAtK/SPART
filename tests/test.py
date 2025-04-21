@@ -8,7 +8,7 @@ from datetime import datetime
 # Ensure the src directory is in the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 from SPART.recommender import PromptRecommender
-from SPART.local_llm_connector import connect_local_llm
+from SPART.local_llm_connector import LocalLLMConnector
 from SPART.optimizer import PromptOptimizer
 
 class TestRecommender(unittest.TestCase):
@@ -21,7 +21,7 @@ class TestRecommender(unittest.TestCase):
             os.makedirs(cls.results_dir)
 
         # Initialise a local LLM connector for testing
-        cls.llm = connect_local_llm("llama3.1")
+        cls.llm = LocalLLMConnector("llama3.1", 2400)
         cls.recommender = PromptRecommender(cls.llm)
         cls.optimizer = PromptOptimizer(cls.llm)
 
@@ -240,11 +240,11 @@ class TestRecommender(unittest.TestCase):
         print("RECCOMENDATION TEST")
         """Test the recommend function and save results to a JSON file."""
         examples = [{"input": input_data, "output": desired_output} for input_data, desired_output in zip(self.data["input_data"], self.data["desired_output"])]
-        num_examples = 5
+        num_examples = 2
         context = "Input is a series of people stating their name and their age. Desired output is a structured classification of their Name and their Age"
 
         # Call the recommend function
-        results = self.recommender.recommend(examples[:50], num_examples, context, 0.90)
+        results = self.recommender.recommend(examples=examples, num_examples=2, context="The input is type int", threshold=0.85, max_iterations=3, semantic_similarity=False, syntactic_similarity=True)
 
         # Write the results to a JSON file
         file_path = os.path.join(self.results_dir, f"recommend_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
@@ -260,28 +260,26 @@ class TestRecommender(unittest.TestCase):
         print("OPTIMIZATION TEST")
         optimizer = self.optimizer
         generated_prompt = "Extract the names and ages from the inputes in the format \"Name: {{name}}, Age: {{age}}\""  
-        input_data = self.data["input_data"]
-        desired_output = self.data["desired_output"]
+        examples = [{"input": input_data, "output": desired_output} for input_data, desired_output in zip(self.data["input_data"], self.data["desired_output"])]
         context="Input is a series of people stating their name and their age. Desired output is a structured classification of their Name and their Age"
-        threshold = 0.95
-        num_examples = 5
+        threshold = 0.85
+        num_examples = 2
 
-        # Optimise the prompt
-        optimised_prompt, similarity_metrics = optimizer.optimise_prompt(
+        # optimize the prompt
+        optimized_prompt, similarity_metrics = optimizer.optimize_prompt(
             generated_prompt,
-            input_data[:50],
-            desired_output[:50],
+            examples[:4],
             num_examples,
             threshold,
             context,
-            semantic_similarity=True,
+            semantic_similarity=False,
             syntactic_similarity=True,
         )
 
         # Prepare the results to save
         results = {
             "original_prompt": generated_prompt,
-            "optimised_prompt": optimised_prompt,
+            "optimized_prompt": optimized_prompt,
             "similarity_metrics": similarity_metrics,
         }
 
@@ -291,7 +289,7 @@ class TestRecommender(unittest.TestCase):
             json.dump(results, json_file, indent=4)
 
         print(f"Optimisation test results saved to: {file_path}")
-        self.assertIsNotNone(optimised_prompt, "The optimisation process did not return a prompt.")
+        self.assertIsNotNone(optimized_prompt, "The optimisation process did not return a prompt.")
         self.assertTrue("semantic_similarity" in similarity_metrics and "syntactic_similarity" in similarity_metrics,
                         "Similarity metrics are incomplete.")
 
