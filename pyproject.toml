@@ -1,0 +1,32 @@
+[project]
+name = "spart"
+version = "0.1.0"
+description = "Streamlined Prompt Automation and Recommender Tool (SPART): A Prompt Recommender System for Accurate Content Generation"
+readme = "README.md"
+license = "MIT"
+authors = [
+  { name = "Faiz Aziz", email = "faizazizatk@gmail.com" }
+]
+requires-python = ">=3.7"
+dependencies = [
+  "sentence-transformers",
+  "rouge-score",
+  "langchain",
+  "langchain-community",
+  "langchain-openai",
+  "transformers",
+  "pandas"
+]
+
+[project.urls]
+Repository = "https://github.com/FaizAzizAtK/SPART"
+
+[build-system]
+requires = ["setuptools>=77.0.0", "wheel", "build"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
