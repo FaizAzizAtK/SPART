@@ -93,7 +93,6 @@ Improves existing prompts by applying prompt engineering best practices.
 ## Use Cases
 
 - **Data transformation**: Generate prompts to convert data from one format to another.
-- **Named Entity Recognition (NER)**: Create prompts for extracting entities from text.
 - **Text summarization**: Build prompts that produce consistent summary formats.
 - **Structured output generation**: Ensure LLM outputs follow specific formats.
 
