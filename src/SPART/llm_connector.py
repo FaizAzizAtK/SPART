@@ -1,68 +1,66 @@
-import logging
-from langchain_community.llms import OpenAI, HuggingFaceHub, Cohere  # Updated import
-from langchain_openai import ChatOpenAI  # Updated import for OpenAI model
-from langchain.schema import AIMessage, HumanMessage
-import os
+import abc
+from typing import Optional
+from transformers import AutoTokenizer
 
-class LLMConnector:
+
+class LLMConnector(abc.ABC):
     """
-    A connector to interact with various LLM providers via LangChain.
-    Supports OpenAI, Hugging Face Hub, and Cohere.
+    An abstract base class for Language Model (LLM) connectors.
+
+    This class defines the interface for interacting with different types of language models,
+    including external API-based and local models. It provides a common structure for
+    token counting, prompt handling, and model invocation.
+
+    Attributes:
+        model_name (str): The name or identifier of the specific model.
+        token_limit (int): Maximum number of tokens allowed in input prompts.
     """
 
-    def __init__(self, provider="openai", model_name=None, api_key=None, temperature=0.7):
+    def __init__(self, model_name: str, token_limit: int = 4096) -> None:
         """
-        Initializes the connector for the specified provider.
-        
+        Initialize the base LLM connector.
+
         Args:
-            provider (str): The LLM provider to use ('openai', 'huggingface', 'cohere').
-            model_name (str): The model name (e.g., 'gpt-4', 'tiiuae/falcon-7b').
-            api_key (str, optional): API key for authentication (if required).
-            temperature (float): Controls randomness (0.0 = deterministic, 1.0 = more random).
+            model_name (str): The name or identifier of the specific model.
+            token_limit (int, optional): Maximum number of tokens allowed in input prompts.
+                Defaults to 4096.
         """
-        self.provider = provider.lower()
         self.model_name = model_name
-        self.api_key = api_key or os.getenv("LLM_API_KEY")  # Use env variable if no key is provided
-        self.temperature = temperature  # Store temperature
+        self.token_limit = token_limit
 
-        # Initialize the LLM model based on the provider
-        if self.provider == "openai":
-            self.llm = ChatOpenAI(model_name=self.model_name, openai_api_key=self.api_key, temperature=self.temperature)
-        elif self.provider == "huggingface":
-            self.llm = HuggingFaceHub(repo_id=self.model_name, huggingfacehub_api_token=self.api_key)
-        elif self.provider == "cohere":
-            self.llm = Cohere(model=self.model_name, cohere_api_key=self.api_key, temperature=self.temperature)
-        else:
-            raise ValueError(f"Unsupported provider: {self.provider}")
+        # Try to load the tokenizer for the given model; fallback to 't5-small'
+        try:
+            self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        except Exception as e:
+            print(
+                f"WARNING: Could not load tokenizer for model {model_name}: {e}")
+            print("Falling back to 't5-small' tokenizer for rough estimates.")
+            self.tokenizer = AutoTokenizer.from_pretrained(
+                't5-small', legacy=False)
 
-
-    def __call__(self, prompt):
+    def _count_tokens(self, text: str) -> int:
         """
-        Sends a prompt to the selected LLM and returns the response.
+        Count the number of tokens in the given text.
+
+        Args:
+            text (str): The input text to tokenize.
+
+        Returns:
+            int: The number of tokens in the text.
+        """
+        if self.tokenizer:
+            return len(self.tokenizer.encode(text))
+        return len(text.split())  # Fallback: estimate by word count
+
+    @abc.abstractmethod
+    def __call__(self, prompt: str) -> Optional[str]:
+        """
+        Abstract method to invoke the language model with a given prompt.
 
         Args:
             prompt (str): The input text to send to the model.
 
         Returns:
-            str: The model's response.
+            Optional[str]: The model's response or None if an error occurs.
         """
-        try:
-            if self.provider == "openai":
-                # Ensure prompt doesn't exceed token limit
-                if len(prompt.split()) > 512:  # OpenAI model token limit
-                    prompt = " ".join(prompt.split()[:512])  # Truncate the prompt to 512 tokens
-
-                messages = [HumanMessage(content=prompt)]
-                response = self.llm.invoke(messages)
-                return response.content if isinstance(response, AIMessage) else str(response)
-            else:
-                # For Hugging Face and Cohere, ensure we do not exceed token limits (model-dependent)
-                if len(prompt.split()) > 512:  # Example limit, adjust as needed for the model
-                    prompt = " ".join(prompt.split()[:512])  # Truncate the prompt to 512 tokens
-
-                response = self.llm.invoke(prompt)  # Hugging Face and Cohere use direct text input
-                return str(response)
-
-        except Exception as e:
-            logging.error(f"Error calling LLM: {str(e)}")
-            return None
+        pass
