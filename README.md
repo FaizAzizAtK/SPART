@@ -16,10 +16,13 @@ To install SPART, run the following command:
 
 ```bash
 pip install spart
-Quick Start
+```
 
-Here’s a quick example to get you started:
+## Quick Start
 
+Here's a quick example to get you started:
+
+```python
 from spart import ExternalLLMConnector, PromptRecommender, PromptEvaluator
 import pandas as pd
 
@@ -50,7 +53,7 @@ examples = pd.DataFrame({
 # Get a recommended prompt
 results = recommender.recommend(
     examples=examples,
-    num_examples=1,  # Use first example for training, rest for testing
+    num_examples=1, # Use first example for training, rest for testing
     context="Extract name and age from text",
     similarity_threshold=0.85,
     max_iterations=3,
@@ -61,40 +64,43 @@ results = recommender.recommend(
 print(f"Recommended prompt: {results['recommended_prompt']}")
 print(f"Semantic similarity: {results['semantic_similarity']}")
 print(f"Syntactic similarity: {results['syntactic_similarity']}")
-Classes Overview
+```
 
-LLMConnector (Abstract Base Class)
+## Classes Overview
+
+### LLMConnector (Abstract Base Class)
 Base interface for connecting to LLMs with the following implementations:
+- **ExternalLLMConnector**: Connect to OpenAI, Cohere, or HuggingFace
+- **LocalLLMConnector**: Connect to local LLMs through Ollama
 
-ExternalLLMConnector: Connect to OpenAI, Cohere, or HuggingFace
-LocalLLMConnector: Connect to local LLMs through Ollama
-PromptEvaluator
+### PromptEvaluator
 Evaluates prompts using:
+- Semantic similarity (using vector embeddings)
+- Syntactic similarity (using ROUGE-L score)
 
-Semantic similarity (using vector embeddings)
-Syntactic similarity (using ROUGE-L score)
-PromptRecommender
+### PromptRecommender
 Generates system prompts based on input-output examples, structured with:
+- Role definition
+- Guidelines
+- Instructions
+- Examples
+- Context
+- Goal
 
-Role definition
-Guidelines
-Instructions
-Examples
-Context
-Goal
-PromptOptimizer
+### PromptOptimizer
 Improves existing prompts by applying prompt engineering best practices.
 
-Use Cases
+## Use Cases
 
-Data transformation: Generate prompts to convert data from one format to another.
-Named Entity Recognition (NER): Create prompts for extracting entities from text.
-Text summarization: Build prompts that produce consistent summary formats.
-Structured output generation: Ensure LLM outputs follow specific formats.
-Contributing
+- **Data transformation**: Generate prompts to convert data from one format to another.
+- **Named Entity Recognition (NER)**: Create prompts for extracting entities from text.
+- **Text summarization**: Build prompts that produce consistent summary formats.
+- **Structured output generation**: Ensure LLM outputs follow specific formats.
+
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
