@@ -1,6 +1,6 @@
 {
     "original_prompt": "Do nothing.",
-    "optimised_prompt": "**Optimized Prompt:**\nExtract the name and age from each row of `input_data` and return the result in the format of \"Name: {name}, Age: {age}\".",
+    "optimized_prompt": "**Optimized Prompt:**\nExtract the name and age from each row of `input_data` and return the result in the format of \"Name: {name}, Age: {age}\".",
     "similarity_metrics": {
         "semantic_similarity": 0.9594980180263519,
         "syntactic_similarity": 0.9333333333333333,

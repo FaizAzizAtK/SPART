@@ -1,6 +1,6 @@
 {
     "original_prompt": "Do nothing.",
-    "optimised_prompt": "Do nothing.",
+    "optimized_prompt": "Do nothing.",
     "similarity_metrics": {
         "semantic_similarity": 0.5550015407800675,
         "syntactic_similarity": 0.24120010492301514,

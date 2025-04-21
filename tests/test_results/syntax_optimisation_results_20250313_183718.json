@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract named entities and classify them (Person, Location, Organization, etc.).",
-    "optimised_prompt": "<instructions>\n    1. Extract named entities from the provided text and classify them into the following categories: Person, Location, and Organization.\n  </instructions>\n  <context>\n    The input data contains sentences that may feature various named entities. \n  </context>\n  <example>\n    Input: \"EU rejects German call to boycott British lamb. Peter Blackburn BRUSSELS 1996-08-22...\"\n    Output: { \"Person\": [\"Peter Blackburn\"], \"Location\": [\"EU\", \"Germany\", \"Britain\", \"BRUSSELS\"], \"Organization\": [\"European Commission\"] }\n  </example>",
+    "optimized_prompt": "<instructions>\n    1. Extract named entities from the provided text and classify them into the following categories: Person, Location, and Organization.\n  </instructions>\n  <context>\n    The input data contains sentences that may feature various named entities. \n  </context>\n  <example>\n    Input: \"EU rejects German call to boycott British lamb. Peter Blackburn BRUSSELS 1996-08-22...\"\n    Output: { \"Person\": [\"Peter Blackburn\"], \"Location\": [\"EU\", \"Germany\", \"Britain\", \"BRUSSELS\"], \"Organization\": [\"European Commission\"] }\n  </example>",
     "similarity_metrics": {
         "semantic_similarity": 0.5640952080488205,
         "syntactic_similarity": 0.030520691712837868,

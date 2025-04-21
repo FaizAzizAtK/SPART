@@ -51,7 +51,7 @@
             "Name: Greetings, I am Ethan and I\u2019m 25, Age: 25"
         ],
         "recommendation": "Optimize",
-        "optimized_prompt": "**Optimised Prompt**\n\n\"Transform each row of {input_data} into a string in the exact format 'Name: {name}, Age: {age}' where '{name}' and '{age}' correspond to the values from the input data, preserving all special characters, syntax, and spacing. Process each row independently without merging or inferring across rows.\"",
+        "optimized_prompt": "**optimized Prompt**\n\n\"Transform each row of {input_data} into a string in the exact format 'Name: {name}, Age: {age}' where '{name}' and '{age}' correspond to the values from the input data, preserving all special characters, syntax, and spacing. Process each row independently without merging or inferring across rows.\"",
         "optimization_metrics": {
             "semantic_similarity": 0.9271970450878143,
             "syntactic_similarity": 0.7655881691408007,

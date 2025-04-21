@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract named entities and classify the tokens a under one of the following labels [I-LOC, B-ORG, O, B-PER, I-PER, I-MISC, B-MISC, I-ORG, B-LOC]. The format should be [\"Token\": \"India\", \"NER_tag\": \"B-LOC\", ..., ...]",
-    "optimised_prompt": "Given a news article, extract the title, author, publication date, and the main content into a structured format. The output should include the title as \"Title:\", the author as \"Author:\", the publication date as \"Date:\", and the main content as \"Content:\". Maintain the exact labels with appropriate punctuation and spacing. The input will be a single string containing the full article.",
+    "optimized_prompt": "Given a news article, extract the title, author, publication date, and the main content into a structured format. The output should include the title as \"Title:\", the author as \"Author:\", the publication date as \"Date:\", and the main content as \"Content:\". Maintain the exact labels with appropriate punctuation and spacing. The input will be a single string containing the full article.",
     "similarity_metrics": {
         "semantic_similarity": 0.33044229447841644,
         "syntactic_similarity": 0.3046183637404748,

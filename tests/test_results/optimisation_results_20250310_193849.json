@@ -1,6 +1,6 @@
 {
     "original_prompt": "Extract the names and ages from the inputes in the format \"Name: {{name}}, Age: {{age}}\"",
-    "optimised_prompt": "Extract the names and ages from the inputes in the format \"Name: {{name}}, Age: {{age}}\"",
+    "optimized_prompt": "Extract the names and ages from the inputes in the format \"Name: {{name}}, Age: {{age}}\"",
     "similarity_metrics": {
         "semantic_similarity": 0.8820264160633087,
         "syntactic_similarity": 0.8314285714285714,
