@@ -1,46 +1,74 @@
-import subprocess
 import logging
+import subprocess
+from typing import Optional
 
-def prompt_llm(prompt, model_name):
+from SPART.llm_connector import LLMConnector
+
+
+class LocalLLMConnector(LLMConnector):
     """
-    Call the specified local Ollama model using its command-line tool with the provided prompt.
-    Args:
-        prompt (str): The prompt to feed into the model.
-        model_name (str): The name of the model to use.
-    Returns:
-        str: The model's output after processing the prompt.
-    Raises:
-        RuntimeError: If there are issues with the model call or subprocess execution.
+    A class to interact with a local Ollama model via its command-line interface.
+
+    Attributes:
+        timeout (int): Maximum execution time before timeout occurs.
     """
-    try:
-        # Execute the Ollama model run command
-        result = subprocess.run(
-            ['ollama', 'run', model_name, prompt],
-            capture_output=True,
-            text=True,
-            timeout=6000
-        )
-        # Check for any errors in model execution
-        if result.returncode != 0:
-            error_message = f"Model call error for {model_name}: {result.stderr}"
+
+    def __init__(
+            self,
+            model_name: str,
+            timeout: int = 600,
+            token_limit: int = 4096) -> None:
+        """
+        Initialize the local LLM connector.
+
+        Args:
+            model_name (str): The name of the Ollama model to interact with.
+            timeout (int, optional): Maximum time to wait for execution. Defaults to 600 seconds.
+            token_limit (int, optional): Maximum token limit for input prompts. Defaults to 4096.
+        """
+        super().__init__(model_name, token_limit)
+        self.timeout = timeout
+
+    def __call__(self, prompt: str) -> Optional[str]:
+        """
+        Sends a prompt to the specified local Ollama model and retrieves the response.
+
+        Args:
+            prompt (str): The input text to be processed by the model.
+
+        Returns:
+            Optional[str]: The model's generated output or None if an error occurs.
+
+        Raises:
+            RuntimeError: If there are issues with subprocess execution.
+        """
+        # Token limit check (using base class method)
+        num_tokens = self._count_tokens(prompt)
+        if num_tokens > self.token_limit:
+            logging.error(f"Prompt exceeds token limit of {self.token_limit}. Token count: {num_tokens}")
+            return None
+
+        try:
+            result = subprocess.run(
+                ['ollama', 'run', self.model_name, prompt],
+                capture_output=True,  # Capture standard output and error output
+                text=True,  # Ensure output is in string format
+                timeout=self.timeout  # Set a timeout for the execution
+            )
+
+            # Check for errors in execution
+            if result.returncode != 0:
+                error_message = f"Model execution failed for '{self.model_name}': {result.stderr}"
+                logging.error(error_message)
+                return None
+
+            return result.stdout.strip()
+
+        except subprocess.TimeoutExpired:
+            error_message = f"Model execution timed out for '{self.model_name}'"
             logging.error(error_message)
-            raise RuntimeError(error_message)
-        # Return cleaned output
-        return result.stdout.strip()
-    except subprocess.TimeoutExpired:
-        error_message = f"Model call timed out for {model_name}"
-        logging.error(error_message)
-        raise RuntimeError(error_message)
-    except Exception as e:
-        logging.error(f"Unexpected error in prompt_llm: {str(e)}")
-        raise
+            return None
 
-def connect_local_llm(model_name):
-    """
-    Create a function that can be called with just a prompt for a specific model.
-    Args:
-        model_name (str): The name of the Ollama model to use.
-    Returns:
-        callable: A function that takes a prompt and calls the specified model.
-    """
-    return lambda prompt: prompt_llm(prompt, model_name=model_name)
+        except Exception as e:
+            logging.error(f"Unexpected error in model execution: {str(e)}")
+            return None
