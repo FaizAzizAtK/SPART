@@ -23,7 +23,7 @@ pip install spart
 Here's a quick example to get you started:
 
 ```python
-from spart import ExternalLLMConnector, PromptRecommender, PromptEvaluator
+from spart import ExternalLLMConnector, PromptRecommender
 import pandas as pd
 
 # Connect to your LLM provider
@@ -35,8 +35,7 @@ llm = ExternalLLMConnector(
 )
 
 # Create an evaluator and recommender
-evaluator = PromptEvaluator(llm)
-recommender = PromptRecommender(llm, evaluator)
+recommender = PromptRecommender(llm)
 
 # Example data
 examples = pd.DataFrame({
@@ -52,13 +51,13 @@ examples = pd.DataFrame({
 
 # Get a recommended prompt
 results = recommender.recommend(
-    examples=examples,
+    examples=examples, # The input-output examples
     num_examples=1, # Use first example for training, rest for testing
-    context="Extract name and age from text",
-    similarity_threshold=0.85,
-    max_iterations=3,
-    semantic_similarity=True,
-    syntactic_similarity=True
+    context="Extract name and age from text", # Extra context for the LLM
+    similarity_threshold=0.85, # Threshold to reach before recommending
+    max_iterations=3, # If threshold isn't reached then optimization will be attempted 3 times
+    semantic_similarity=False, # Don't evaluate based on semantics
+    syntactic_similarity=True # Do evaluate based on syntax
 )
 
 print(f"Recommended prompt: {results['recommended_prompt']}")
