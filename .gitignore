@@ -164,4 +164,4 @@ cython_debug/
 # Ignore all test result files
 tests/test_results/
 tests/final test results/
-tests/my_tests
+tests/my_tests/
