@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 # Adjust the path to import from src
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from SPART.external_llm_connector import ExternalLLMConnector
+from spart.external_llm_connector import ExternalLLMConnector
 
 @pytest.fixture(scope="module", autouse=True)
 def load_env():

@@ -8,9 +8,9 @@ from datetime import datetime
 # Add src to Python path
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
-from SPART.recommender import PromptRecommender
-from SPART.external_llm_connector import ExternalLLMConnector
-from SPART.optimizer import PromptOptimizer
+from spart.recommender import PromptRecommender
+from spart.external_llm_connector import ExternalLLMConnector
+from spart.optimizer import PromptOptimizer
 import kagglehub
 
 # Load environment variables
