@@ -80,7 +80,7 @@ class PromptRecommender:
 
     def recommend(
         self,
-        examples: list[list[str]],
+        examples: pd.DataFrame,
         num_examples: int,
         context: Optional[str] = None,
         similarity_threshold: float = 0.8,
