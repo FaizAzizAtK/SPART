@@ -10,9 +10,9 @@ import kagglehub
 # Adjust the path to import from src
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from SPART.recommender import PromptRecommender
-from SPART.external_llm_connector import ExternalLLMConnector
-from SPART.optimizer import PromptOptimizer
+from spart.recommender import PromptRecommender
+from spart.external_llm_connector import ExternalLLMConnector
+from spart.optimizer import PromptOptimizer
 
 # Load environment variables automatically before tests
 @pytest.fixture(scope="module", autouse=True)
