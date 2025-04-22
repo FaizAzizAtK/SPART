@@ -1,7 +1,7 @@
 import re
 import pandas as pd
-from SPART.evaluator import PromptEvaluator
-from SPART.llm_connector import LLMConnector
+from spart.evaluator import PromptEvaluator
+from spart.llm_connector import LLMConnector
 from typing import Any, Optional
 
 
@@ -177,9 +177,9 @@ class PromptOptimizer:
                 best_syntactic_sim = new_syntactic_sim
                 best_evaluation = new_evaluation
 
-            if self.auto_confirm:
+            if self.auto_confirm and attempt < max_iterations:
                 print("\n⚡ Automatically optimizing further...")
-            else:
+            if self.auto_confirm is False:
                 user_input = input(
                     "Would you like to optimize further? (y/n): ").strip().lower()
                 if user_input != 'y':
