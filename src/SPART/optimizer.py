@@ -36,7 +36,7 @@ class PromptOptimizer:
     def optimize_prompt(
         self,
         meta_prompt: str,
-        examples: list[list[str]],
+        examples: pd.DataFrame,
         num_examples: int,
         threshold: float = 0.85,
         context: Optional[str] = None,
