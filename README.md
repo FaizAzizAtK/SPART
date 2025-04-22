@@ -34,7 +34,7 @@ llm = ExternalLLMConnector(
     temperature=0.7
 )
 
-# Create an evaluator and recommender
+# Create a recommender
 recommender = PromptRecommender(llm)
 
 # Example data
