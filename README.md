@@ -57,7 +57,7 @@ results = recommender.recommend(
     context="Extract name and age from text", # Extra context for the LLM
     similarity_threshold=0.85, # Threshold to reach before recommending
     max_iterations=3, # If threshold isn't reached then optimization will be attempted 3 times
-    semantic_similarity=False, # Don't evaluate based on semantics
+    semantic_similarity=False, # Do not evaluate based on semantics
     syntactic_similarity=True # Do evaluate based on syntax
 )
 
