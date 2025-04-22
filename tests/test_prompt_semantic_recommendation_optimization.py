@@ -64,7 +64,7 @@ def test_semantic_recommendation(setup_resources):
     examples = [{"input_data": i, "desired_output": o} for i, o in zip(data["input_data"], data["desired_output"])]
     context = "You are solving grade school-level math word problems. Each input is a question, and the output is the correct answer with reasoning steps. Format should be natural language."
     num_examples = 7
-    threshold = 0.75
+    threshold = 0.79
     max_iterations = 3
     semantic_similarity = True
     syntactic_similarity = False
@@ -80,7 +80,7 @@ def test_semantic_recommendation(setup_resources):
 
     print(f"Semantic recommendation results saved to: {file_path}")
 
-    # Check if similarity is above the threshold (0.75)
+    # Check if similarity is above the threshold (0.79)
     assert len(results) > 0, "No results returned from recommend function."
     assert results[0].get('semantic_similarity', 0) > threshold, f"Semantic similarity is below the threshold of {threshold}"
 
@@ -93,7 +93,7 @@ def test_semantic_optimization(setup_resources):
     examples = [{"input_data": i, "desired_output": o} for i, o in zip(data["input_data"], data["desired_output"])]
     context = "Each input is a math problem, and the output should be a natural language explanation ending with the answer."
     num_examples = 7
-    threshold = 0.75
+    threshold = 0.79
     max_iterations = 5
     semantic_similarity = True
     syntactic_similarity = False
@@ -119,6 +119,6 @@ def test_semantic_optimization(setup_resources):
 
     print(f"Semantic optimization results saved to: {file_path}")
 
-    # Check if similarity is above the threshold (0.75)
+    # Check if similarity is above the threshold (0.79)
     similarity_metrics = results_dict.get("similarity_metrics", {})
     assert similarity_metrics.get("semantic_similarity", 0) > threshold, f"Semantic similarity is below the threshold of {threshold}"
