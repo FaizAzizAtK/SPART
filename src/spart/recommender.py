@@ -92,7 +92,7 @@ class PromptRecommender:
         Recommends an optimized system prompt based on provided examples.
 
         Args:
-            examples (list): A list of input-output example pairs.
+            examples (pd.DataFrame): A list of input-output example pairs.
             num_examples (int): The number of examples to use for generating the prompt.
             context (str, optional): Additional context for generating the prompt. Defaults to None.
             similarity_threshold (float, optional): The threshold for similarity scores. Defaults to 0.8.
