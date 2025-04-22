@@ -37,7 +37,8 @@ llm = ExternalLLMConnector(
 # Create a recommender
 recommender = PromptRecommender(llm)
 
-# Example data (IMPORTANT: inputs must be the first column and desired_outputs the second column)
+# Example data 
+# (inputs must be the first column and desired_outputs the second column)
 examples = pd.DataFrame({
     'inputs': [
         "My name is John and I am 30 years old",
