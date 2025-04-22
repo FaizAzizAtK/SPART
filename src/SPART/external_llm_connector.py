@@ -6,7 +6,7 @@ from langchain_openai import ChatOpenAI
 from langchain.schema import AIMessage, HumanMessage
 from transformers import AutoTokenizer
 
-from SPART.llm_connector import LLMConnector
+from spart.llm_connector import LLMConnector
 
 
 class ExternalLLMConnector(LLMConnector):

@@ -1,4 +1,4 @@
-from SPART.llm_connector import LLMConnector
+from spart.llm_connector import LLMConnector
 from concurrent.futures import ThreadPoolExecutor
 from sentence_transformers import SentenceTransformer, util
 from rouge_score import rouge_scorer
