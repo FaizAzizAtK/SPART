@@ -42,11 +42,21 @@ recommender = PromptRecommender(llm)
 examples = pd.DataFrame({
     'inputs': [
         "My name is John and I am 30 years old",
-        "Hello I'm Emma, age 25"
+        "Hello I'm Emma, age 25",
+        "Name's Sarah, I'm 29",
+        "I go by Alice, and I’m 22",
+        "It’s Tom here, aged 31",
+        "You can call me Linda, I’m 27",
+        "Hey, this is Mark and I’m 38"
     ],
     'desired_outputs': [
         "Name: John, Age: 30",
-        "Name: Emma, Age: 25"
+        "Name: Emma, Age: 25",
+        "Name: Sarah, Age: 29",
+        "Name: Alice, Age: 22",
+        "Name: Tom, Age: 31",
+        "Name: Linda, Age: 27",
+        "Name: Mark, Age: 38"
     ]
 })
 
