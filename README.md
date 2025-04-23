@@ -1,4 +1,4 @@
-# SPART: Streamlined Prompt Automation and Recommendation Tool
+# SPART: Streamlined Prompt Automation and Recommendation Tool (SOON TO BE PUBLISHED)
 
 **SPART** is a Python package designed to simplify prompt engineering for Large Language Models (LLMs). It provides tools for generating, evaluating, and optimizing prompts automatically, making the process of creating effective prompts more efficient and less manual.
 
