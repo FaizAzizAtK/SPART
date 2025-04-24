@@ -1,0 +1,43 @@
+name: Test Build and Upload to TestPyPI
+
+on:
+  push:
+    branches:
+      - main  # Trigger this workflow on pushes to the 'main' branch (or any other branch you choose)
+
+jobs:
+  build-testpypi:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine pytest
+
+      - name: Run tests
+        run: |
+          # You can specify your test framework, e.g., pytest here
+          pytest --maxfail=1 --disable-warnings -q
+
+      - name: Build distribution
+        run: |
+          python -m build  # This will create the distribution files (wheel and source distribution)
+
+      - name: Upload distribution to TestPyPI
+        run: |
+          python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*  # Upload to TestPyPI
+        env:
+          TWINE_USERNAME: ${{ secrets.TEST_PYPI_USERNAME }}  
+          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_PASSWORD }} 
