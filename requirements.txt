@@ -1,7 +1,8 @@
-sentence-transformers
-rouge-score
-langchain
-langchain-community
-langchain-openai
-transformers
-pandas
+sentence-transformers==2.2.2
+rouge-score==0.1.2
+langchain==0.1.7
+langchain-community==0.0.1
+langchain-openai==0.0.3
+transformers==4.12.0
+pandas==1.3.3
+pytest==7.0.0
