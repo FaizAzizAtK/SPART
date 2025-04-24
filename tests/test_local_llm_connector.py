@@ -1,33 +1,90 @@
-import os
-import sys
 import pytest
-from dotenv import load_dotenv
+from unittest.mock import patch, MagicMock
+import subprocess
+import logging
 
-# Adjust the path to import from src
+import sys 
+import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
 from spart.local_llm_connector import LocalLLMConnector
 
-@pytest.fixture(scope="module", autouse=True)
-def load_env():
-    """Automatically load environment variables before tests."""
-    load_dotenv()
-
-def test_local_llm_response_not_empty():
-    """
-    Test that the LocalLLMConnector successfully connects and returns a non-empty response
-    for a given prompt.
-    """
-    # Initialize the connector for a local LLM (example: "llama3.1")
-    llm = LocalLLMConnector("llama3.1")
-
-    assert llm is not None, "Failed to connect to the local LLM."
-
-    # Define a simple prompt
-    prompt = "Explain the basics of artificial intelligence."
-
-    # Get the response from the LLM
-    response = llm(prompt)
-
-    # Check if the response is not empty
-    assert response, "LLM response is empty!"
+class TestLocalLLMConnector:
+    """Tests for the LocalLLMConnector class"""
+    
+    @pytest.fixture
+    def connector(self):
+        """Fixture to provide a LocalLLMConnector instance"""
+        with patch('transformers.AutoTokenizer.from_pretrained'):
+            return LocalLLMConnector(
+                model_name="llama2",
+                timeout=30,
+                token_limit=100
+            )
+    
+    def test_initialization(self, connector):
+        """Test initialization with parameters"""
+        assert connector.model_name == "llama2"
+        assert connector.timeout == 30
+        assert connector.token_limit == 100
+    
+    @patch('subprocess.run')
+    def test_successful_call(self, mock_run, connector):
+        """Test successful subprocess call"""
+        # Configure mock subprocess call
+        mock_process = MagicMock()
+        mock_process.returncode = 0
+        mock_process.stdout = "Generated response"
+        mock_run.return_value = mock_process
+        
+        # Mock token counting
+        with patch.object(connector, '_count_tokens', return_value=50):
+            result = connector("Test prompt")
+            
+            # Assert subprocess was called correctly
+            mock_run.assert_called_once_with(
+                ['ollama', 'run', 'llama2', 'Test prompt'],
+                capture_output=True,
+                text=True,
+                timeout=30
+            )
+            
+            assert result == "Generated response"
+    
+    @patch('subprocess.run')
+    @patch('logging.error')
+    def test_subprocess_error(self, mock_log, mock_run, connector):
+        """Test behavior when subprocess fails"""
+        # Configure mock subprocess call
+        mock_process = MagicMock()
+        mock_process.returncode = 1
+        mock_process.stderr = "Command failed"
+        mock_run.return_value = mock_process
+        
+        # Mock token counting
+        with patch.object(connector, '_count_tokens', return_value=50):
+            result = connector("Test prompt")
+            assert result is None
+            mock_log.assert_called_once()
+    
+    @patch('subprocess.run')
+    @patch('logging.error')
+    def test_timeout(self, mock_log, mock_run, connector):
+        """Test behavior when subprocess times out"""
+        # Configure mock subprocess call
+        mock_run.side_effect = subprocess.TimeoutExpired(cmd=['ollama', 'run', 'llama2', ''], timeout=30)
+        
+        # Mock token counting
+        with patch.object(connector, '_count_tokens', return_value=50):
+            result = connector("Test prompt")
+            assert result is None
+            mock_log.assert_called_once()
+    
+    @patch('logging.error')
+    def test_token_limit_exceeded(self, mock_log, connector):
+        """Test behavior when token limit is exceeded"""
+        # Mock token counting to exceed limit
+        with patch.object(connector, '_count_tokens', return_value=200):
+            result = connector("Test prompt")
+            assert result is None
+            mock_log.assert_called_once()
