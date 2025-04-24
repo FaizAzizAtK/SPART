@@ -3,7 +3,7 @@ name: Test Build and Upload to TestPyPI
 on:
   push:
     branches:
-      - main  # Trigger this workflow on pushes to the 'main' branch (or any other branch you choose)
+      - main  # Trigger this workflow on pushes to the 'main' branch 
 
 jobs:
   build-testpypi:
