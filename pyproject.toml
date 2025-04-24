@@ -9,15 +9,15 @@ authors = [
 ]
 requires-python = ">=3.7"
 dependencies = [
-  "numpy==2.2.5",
-  "sentence-transformers==4.1.0",
-  "rouge-score==0.1.2",
-  "langchain==0.3.24",
-  "langchain-community==0.3.22",
-  "langchain-openai==0.3.14",
-  "transformers==4.51.3",
-  "pandas==2.2.3",
-  "pytest==8.3.5"
+  "numpy",
+  "sentence-transformers",
+  "rouge-score",
+  "langchain",
+  "langchain-community",
+  "langchain-openai",
+  "transformers",
+  "pandas",
+  "pytest"
 ]
 
 [project.urls]
