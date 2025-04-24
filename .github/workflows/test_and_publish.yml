@@ -1,7 +1,7 @@
 name: Test and Publish Python Package
 
 on:
-  workflow_dispatch:  # This allows you to trigger the workflow manually from GitHub Actions
+  workflow_dispatch: 
 
 permissions:
   contents: read
