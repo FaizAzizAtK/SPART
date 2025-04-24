@@ -1,4 +1,4 @@
-# SPART: Streamlined Prompt Automation and Recommendation Tool (SOON TO BE PUBLISHED)
+# SPART: Streamlined Prompt Automation and Recommendation Tool
 
 **SPART** is a Python package designed to simplify prompt engineering for Large Language Models (LLMs). It provides tools for generating, evaluating, and optimizing prompts automatically, making the process of creating effective prompts more efficient and less manual.
 
@@ -15,7 +15,7 @@
 To install SPART, run the following command:
 
 ```bash
-pip install spart
+pip install spart-prompt
 ```
 
 ## Quick Start
@@ -23,7 +23,7 @@ pip install spart
 Here's a quick example to get you started:
 
 ```python
-from spart import ExternalLLMConnector, PromptRecommender
+from spart-prompt import ExternalLLMConnector, PromptRecommender
 import pandas as pd
 
 # Connect to your LLM provider
