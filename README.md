@@ -117,7 +117,7 @@ examples = pd.DataFrame({
 })
 
 # Initial prompt to optimize
-prompt = "Extract the person's name and age from the text and output in the format "Name: {name}, Age: {age}"."
+prompt = "Extract the person's name and age from the text and output in the format \"Name: {name}, Age: {age}\"."
 
 # Optimize the prompt
 results = optimizer.optimize_prompt(
