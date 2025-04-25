@@ -7,7 +7,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from spart.local_llm_connector import LocalLLMConnector
+from spart_prompt.local_llm_connector import LocalLLMConnector
 
 class TestLocalLLMConnector:
     """Tests for the LocalLLMConnector class"""

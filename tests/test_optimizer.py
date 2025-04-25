@@ -6,8 +6,8 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from spart.optimizer import PromptOptimizer
-from spart.llm_connector import LLMConnector
+from spart_prompt.optimizer import PromptOptimizer
+from spart_prompt.llm_connector import LLMConnector
 
 class MockLLM(LLMConnector):
     """Mock LLM for testing optimizer"""

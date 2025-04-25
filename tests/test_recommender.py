@@ -6,8 +6,8 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from spart.recommender import PromptRecommender
-from spart.llm_connector import LLMConnector
+from spart_prompt.recommender import PromptRecommender
+from spart_prompt.llm_connector import LLMConnector
 
 class MockLLM(LLMConnector):
     """Mock LLM for testing recommender"""

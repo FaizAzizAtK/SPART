@@ -6,7 +6,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from spart.evaluator import PromptEvaluator
+from spart_prompt.evaluator import PromptEvaluator
 
 class TestPromptEvaluator:
     """Tests for the PromptEvaluator class"""

@@ -2,10 +2,10 @@ import pytest
 from unittest.mock import patch, MagicMock
 import pandas as pd
 
-from spart.llm_connector import LLMConnector
-from spart.evaluator import PromptEvaluator
-from spart.optimizer import PromptOptimizer
-from spart.recommender import PromptRecommender
+from spart_prompt.llm_connector import LLMConnector
+from spart_prompt.evaluator import PromptEvaluator
+from spart_prompt.optimizer import PromptOptimizer
+from spart_prompt.recommender import PromptRecommender
 
 
 class MockLLMConnector(LLMConnector):

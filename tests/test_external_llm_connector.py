@@ -6,7 +6,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from spart.external_llm_connector import ExternalLLMConnector
+from spart_prompt.external_llm_connector import ExternalLLMConnector
 
 class TestExternalLLMConnector:
     """Tests for the ExternalLLMConnector class"""
