@@ -64,7 +64,7 @@ examples = pd.DataFrame({
 results = recommender.recommend(
     examples=examples, # The input-output examples
     num_examples=1, # Use first example for training, rest for testing
-    context="Extract name and age from text", # Extra context for the LLM
+    context="Input contains a short sentence with a person's name and age. Extract both in the format 'Name: X, Age: Y'.", # Extra context for the LLM
     similarity_threshold=0.85, # Threshold to reach before recommending
     max_iterations=3, # If threshold isn't reached then optimization will be attempted 3 times
     semantic_similarity=False, # Don't evaluate based on semantics
@@ -117,11 +117,11 @@ examples = pd.DataFrame({
 })
 
 # Initial prompt to optimize
-generated_prompt = "Extract the person's name and age from the text."
+prompt = "Extract the person's name and age from the text and output in the format \"Name: {name}, Age: {age}\"."
 
 # Optimize the prompt
 results = optimizer.optimize_prompt(
-    generated_prompt=generated_prompt,
+    generated_prompt=prompt,
     examples=examples.to_dict("records"),
     num_examples=1,
     similarity_threshold=0.9,
