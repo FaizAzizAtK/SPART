@@ -1,4 +1,4 @@
-# __init__.py for spart package
+# __init__.py for spart_prompt package
 
 from .evaluator import PromptEvaluator
 from .optimizer import PromptOptimizer
