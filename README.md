@@ -87,7 +87,7 @@ import pandas as pd
 llm = ExternalLLMConnector(
     provider="openai",
     model_name="gpt-4o",
-    api_key="your_api_key_here",
+    api_key="your_api_key",
     temperature=0.7
 )
 
