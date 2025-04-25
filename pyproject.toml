@@ -1,6 +1,6 @@
 [project]
 name = "spart-prompt"
-version = "0.1.4"
+version = "0.1.0"
 description = "Streamlined Prompt Automation and Recommender Tool (SPART): A Prompt Recommender System for Accurate Content Generation"
 readme = "README.md"
 license = {text = "MIT"}
