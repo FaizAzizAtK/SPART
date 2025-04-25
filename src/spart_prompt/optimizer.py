@@ -1,7 +1,7 @@
 import re
 import pandas as pd
-from spart.evaluator import PromptEvaluator
-from spart.llm_connector import LLMConnector
+from spart_prompt.evaluator import PromptEvaluator
+from spart_prompt.llm_connector import LLMConnector
 from typing import Any, Optional
 
 

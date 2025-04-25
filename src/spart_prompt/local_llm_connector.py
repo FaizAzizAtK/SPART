@@ -2,7 +2,7 @@ import logging
 import subprocess
 from typing import Optional
 
-from spart.llm_connector import LLMConnector
+from spart_prompt.llm_connector import LLMConnector
 
 
 class LocalLLMConnector(LLMConnector):

@@ -1,7 +1,7 @@
 import re
-from spart.llm_connector import LLMConnector
-from spart.optimizer import PromptOptimizer
-from spart.evaluator import PromptEvaluator
+from spart_prompt.llm_connector import LLMConnector
+from spart_prompt.optimizer import PromptOptimizer
+from spart_prompt.evaluator import PromptEvaluator
 import pandas as pd
 from typing import Any, Optional
 
