@@ -67,7 +67,7 @@ results = recommender.recommend(
     context="Input contains a short sentence with a person's name and age. Extract both in the format 'Name: X, Age: Y'.", # Extra context for the LLM
     similarity_threshold=0.85, # Threshold to reach before recommending
     max_iterations=3, # If threshold isn't reached then optimization will be attempted 3 times
-    semantic_similarity=False, # Don't evaluate based on semantics
+    semantic_similarity=False, # Don't evaluate based on semantics (outputs -1 if off)
     syntactic_similarity=True # Do evaluate based on syntax
 )
 
@@ -117,15 +117,15 @@ examples = pd.DataFrame({
 })
 
 # Initial prompt to optimize
-prompt = "Extract the person's name and age from the text and output in the format \"Name: {name}, Age: {age}\"."
+prompt = "Extract the person's name and age from the text."
 
 # Optimize the prompt
 results = optimizer.optimize_prompt(
-    generated_prompt=prompt,
-    examples=examples.to_dict("records"),
+    system_prompt=prompt,
+    examples=examples,
     num_examples=1,
-    similarity_threshold=0.9,
-    context="Input contains a short sentence with a person's name and age. Extract both in the format 'Name: X, Age: Y'.",
+    threshold=0.9,
+    context="Input contains a short sentence with a person's name and age.",
     max_iterations=3,
     semantic_similarity=False,
     syntactic_similarity=True
@@ -159,7 +159,7 @@ Generates system prompts based on input-output examples, structured with:
 - Goal
 
 ### PromptOptimizer
-Improves existing prompts by applying prompt engineering best practices.
+Improves existing prompts by applying prompt engineering best practices - architecture similar to PromptRecommender.
 
 ## Use Cases
 
