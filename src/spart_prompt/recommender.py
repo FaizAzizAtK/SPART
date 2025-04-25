@@ -101,7 +101,7 @@ class PromptRecommender:
         Returns:
             dict: A dictionary containing the recommendation and evaluation metrics.
         """
-        
+
         if num_examples > 0:
             input_column_for_prompt = examples.iloc[:num_examples, 0]
             output_column_for_prompt = examples.iloc[:num_examples, 1]
@@ -110,8 +110,8 @@ class PromptRecommender:
         else:
             input_column_for_prompt = []
             output_column_for_prompt = []
-            input_column_for_evaluation = dataframe.iloc[:, 0]
-            output_column_for_evaluation = dataframe.iloc[:, 1]
+            input_column_for_evaluation = examples.iloc[:, 0]
+            output_column_for_evaluation = examples.iloc[:, 1]
 
         context_prompt = f"\n**Context**: {context}" if context else ""
 
