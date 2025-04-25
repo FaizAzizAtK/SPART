@@ -18,7 +18,7 @@ class TestExternalLLMConnector:
     ])
     def test_initialization(self, provider, model_name, expected_class):
         """Test initialization with different providers"""
-        with patch(f'spart.external_llm_connector.{expected_class}') as mock_class:
+        with patch(f'spart_prompt.external_llm_connector.{expected_class}') as mock_class:
             ExternalLLMConnector(
                 provider=provider,
                 model_name=model_name,
@@ -37,7 +37,7 @@ class TestExternalLLMConnector:
             )
         assert "Unsupported provider" in str(excinfo.value)
     
-    @patch('spart.external_llm_connector.ChatOpenAI')
+    @patch('spart_prompt.external_llm_connector.ChatOpenAI')
     def test_openai_call(self, mock_openai):
         """Test successful OpenAI API call"""
         # Configure mock
@@ -59,7 +59,7 @@ class TestExternalLLMConnector:
             result = connector("Test prompt")
             assert result == "Generated response"
     
-    @patch('spart.external_llm_connector.HuggingFaceHub')
+    @patch('spart_prompt.external_llm_connector.HuggingFaceHub')
     def test_huggingface_call(self, mock_hf):
         """Test successful Hugging Face API call"""
         # Configure mock
@@ -79,7 +79,7 @@ class TestExternalLLMConnector:
             result = connector("Test prompt")
             assert result == "Generated response"
     
-    @patch('spart.external_llm_connector.Cohere')
+    @patch('spart_prompt.external_llm_connector.Cohere')
     def test_cohere_call(self, mock_cohere):
         """Test successful Cohere API call"""
         # Configure mock
@@ -99,7 +99,7 @@ class TestExternalLLMConnector:
             result = connector("Test prompt")
             assert result == "Generated response"
     
-    @patch('spart.external_llm_connector.ChatOpenAI')
+    @patch('spart_prompt.external_llm_connector.ChatOpenAI')
     def test_token_limit_exceeded(self, mock_openai):
         """Test behavior when token limit is exceeded"""
         connector = ExternalLLMConnector(
@@ -114,7 +114,7 @@ class TestExternalLLMConnector:
             result = connector("Test prompt")
             assert result is None
             
-    @patch('spart.external_llm_connector.ChatOpenAI')
+    @patch('spart_prompt.external_llm_connector.ChatOpenAI')
     def test_api_error(self, mock_openai):
         """Test behavior when API call fails"""
         # Configure mock to raise exception

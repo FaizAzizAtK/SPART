@@ -40,7 +40,7 @@ class TestPromptOptimizer:
     @pytest.fixture
     def optimizer(self, mock_llm):
         """Fixture to provide a PromptOptimizer instance with mocked dependencies"""
-        with patch('spart.optimizer.PromptEvaluator') as mock_evaluator_cls:
+        with patch('spart_prompt.optimizer.PromptEvaluator') as mock_evaluator_cls:
             mock_evaluator = MagicMock()
             mock_evaluator_cls.return_value = mock_evaluator
             optimizer = PromptOptimizer(llm=mock_llm, auto_confirm=True)

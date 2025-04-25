@@ -14,7 +14,7 @@ class TestPromptEvaluator:
     @pytest.fixture
     def evaluator(self, mock_llm):
         """Fixture to provide a PromptEvaluator instance with mocked dependencies"""
-        with patch('spart.evaluator.SentenceTransformer') as mock_model:
+        with patch('spart_prompt.evaluator.SentenceTransformer') as mock_model:
             mock_model_instance = MagicMock()
             mock_model.return_value = mock_model_instance
             evaluator = PromptEvaluator(mock_llm)
@@ -39,7 +39,7 @@ class TestPromptEvaluator:
         mock_tensor2 = torch.tensor([3.0, 2.0, 1.0])
         evaluator.model.encode.side_effect = [mock_tensor1, mock_tensor2]
         
-        with patch('spart.evaluator.util.pytorch_cos_sim') as mock_cos_sim:
+        with patch('spart_prompt.evaluator.util.pytorch_cos_sim') as mock_cos_sim:
             mock_cos_sim.return_value = torch.tensor([[0.714]])
             
             # Call the method
@@ -54,7 +54,7 @@ class TestPromptEvaluator:
     
     def test_compute_syntactic_similarity(self, evaluator):
         """Test computing syntactic similarity using ROUGE-L"""
-        with patch('spart.evaluator.rouge_scorer.RougeScorer') as mock_rouge:
+        with patch('spart_prompt.evaluator.rouge_scorer.RougeScorer') as mock_rouge:
             # Configure mock
             mock_rouge_instance = MagicMock()
             mock_rouge_score = {'rougeL': MagicMock(fmeasure=0.85)}

@@ -44,7 +44,7 @@ class TestIntegration:
         })
 
     @patch('sentence_transformers.SentenceTransformer')
-    @patch('spart.evaluator.util.pytorch_cos_sim')
+    @patch('spart_prompt.evaluator.util.pytorch_cos_sim')
     @patch('rouge_score.rouge_scorer.RougeScorer')
     def test_evaluator_with_connector(self, mock_rouge, mock_cos_sim, mock_transformer, mock_llm_connector):
         """Test PromptEvaluator with LLMConnector integration"""

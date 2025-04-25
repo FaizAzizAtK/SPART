@@ -16,7 +16,7 @@ class TestLLMConnector:
         assert connector.model_name == "test-model"
         assert connector.token_limit == 1000
 
-    @patch('spart.llm_connector.AutoTokenizer')
+    @patch('spart_prompt.llm_connector.AutoTokenizer')
     def test_token_counting(self, mock_tokenizer):
         """Test token counting functionality."""
         # Mock tokenizer
@@ -33,7 +33,7 @@ class TestLLMConnector:
         assert token_count == 4
         mock_instance.encode.assert_called_once_with("This is a test.")
 
-    @patch('spart.llm_connector.AutoTokenizer')
+    @patch('spart_prompt.llm_connector.AutoTokenizer')
     def test_token_counting_fallback(self, mock_tokenizer):
         """Test token counting fallback when tokenizer fails."""
         # Mock tokenizer that raises an exception
@@ -44,7 +44,7 @@ class TestLLMConnector:
                 return "test response"
         
         # Create a second mock for the fallback tokenizer
-        with patch('spart.llm_connector.AutoTokenizer.from_pretrained') as mock_fallback:
+        with patch('spart_prompt.llm_connector.AutoTokenizer.from_pretrained') as mock_fallback:
             mock_fallback_instance = Mock()
             mock_fallback_instance.encode.return_value = [101, 102, 103, 104, 105]  # 5 tokens
             mock_fallback.return_value = mock_fallback_instance
@@ -54,7 +54,7 @@ class TestLLMConnector:
             token_count = connector._count_tokens("This is a fallback test.")
             assert token_count == 5
 
-    @patch('spart.llm_connector.AutoTokenizer')
+    @patch('spart_prompt.llm_connector.AutoTokenizer')
     def test_token_counting_with_empty_string(self, mock_tokenizer):
         """Test token counting with an empty string."""
         mock_instance = Mock()
@@ -70,7 +70,7 @@ class TestLLMConnector:
         assert token_count == 0
         mock_instance.encode.assert_called_once_with("")
 
-    @patch('spart.llm_connector.AutoTokenizer')
+    @patch('spart_prompt.llm_connector.AutoTokenizer')
     def test_token_counting_with_special_characters(self, mock_tokenizer):
         """Test token counting with special characters in the string."""
         mock_instance = Mock()
@@ -86,7 +86,7 @@ class TestLLMConnector:
         assert token_count == 4
         mock_instance.encode.assert_called_once_with("This is a test! #special_chars")
 
-    @patch('spart.llm_connector.AutoTokenizer')
+    @patch('spart_prompt.llm_connector.AutoTokenizer')
     def test_token_counting_with_long_text(self, mock_tokenizer):
         """Test token counting with a long string."""
         mock_instance = Mock()
@@ -104,14 +104,14 @@ class TestLLMConnector:
         assert token_count == 100
         mock_instance.encode.assert_called_once_with(long_text)
 
-    @patch('spart.llm_connector.AutoTokenizer')
+    @patch('spart_prompt.llm_connector.AutoTokenizer')
     def test_token_counting_with_empty_string_fallback(self, mock_tokenizer):
         """Test token counting fallback when given an empty string."""
         # Mock tokenizer that raises an exception
         mock_tokenizer.from_pretrained.side_effect = Exception("Tokenizer not found")
         
         # Create a mock for the fallback tokenizer
-        with patch('spart.llm_connector.AutoTokenizer.from_pretrained') as mock_fallback:
+        with patch('spart_prompt.llm_connector.AutoTokenizer.from_pretrained') as mock_fallback:
             mock_fallback_instance = Mock()
             mock_fallback_instance.encode.return_value = []  # No tokens for empty string
             mock_fallback.return_value = mock_fallback_instance
@@ -126,14 +126,14 @@ class TestLLMConnector:
             assert token_count == 0  # Expect 0 tokens
             mock_fallback_instance.encode.assert_called_once_with("")
 
-    @patch('spart.llm_connector.AutoTokenizer')
+    @patch('spart_prompt.llm_connector.AutoTokenizer')
     def test_token_counting_with_no_tokens(self, mock_tokenizer):
         """Test fallback to word count when there are no tokens."""
         # Mock tokenizer that raises an exception
         mock_tokenizer.from_pretrained.side_effect = Exception("Tokenizer not found")
         
         # Create a mock for the fallback tokenizer
-        with patch('spart.llm_connector.AutoTokenizer.from_pretrained') as mock_fallback:
+        with patch('spart_prompt.llm_connector.AutoTokenizer.from_pretrained') as mock_fallback:
             mock_fallback_instance = Mock()
             mock_fallback_instance.encode.return_value = []  # No tokens
             mock_fallback.return_value = mock_fallback_instance
@@ -150,7 +150,7 @@ class TestLLMConnector:
 
 
 
-    @patch('spart.llm_connector.AutoTokenizer')
+    @patch('spart_prompt.llm_connector.AutoTokenizer')
     def test_tokenizer_error_handling(self, mock_tokenizer):
         """Test tokenizer error handling."""
         # Simulate tokenizer error during initial load
@@ -161,10 +161,10 @@ class TestLLMConnector:
         mock_fallback.encode.return_value = [101, 102, 103, 104]  # Simulating tokenization
 
         # Mock the fallback tokenizer to be used when the exception occurs
-        with patch('spart.llm_connector.AutoTokenizer.from_pretrained', side_effect=mock_tokenizer.from_pretrained):
+        with patch('spart_prompt.llm_connector.AutoTokenizer.from_pretrained', side_effect=mock_tokenizer.from_pretrained):
             mock_tokenizer.from_pretrained.side_effect = Exception("Tokenizer error")
             # Now mock the fallback tokenizer call
-            with patch('spart.llm_connector.AutoTokenizer.from_pretrained', return_value=mock_fallback):
+            with patch('spart_prompt.llm_connector.AutoTokenizer.from_pretrained', return_value=mock_fallback):
                 
                 class ConcreteLLM(LLMConnector):
                     def __call__(self, prompt):

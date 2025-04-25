@@ -40,8 +40,8 @@ class TestPromptRecommender:
     @pytest.fixture
     def recommender(self, mock_llm):
         """Fixture to provide a PromptRecommender instance with mocked dependencies"""
-        with patch('spart.recommender.PromptEvaluator') as mock_evaluator_class, \
-            patch('spart.recommender.PromptOptimizer') as mock_optimizer_class:
+        with patch('spart_prompt.recommender.PromptEvaluator') as mock_evaluator_class, \
+            patch('spart_prompt.recommender.PromptOptimizer') as mock_optimizer_class:
             
             mock_evaluator = MagicMock()
             mock_evaluator_class.return_value = mock_evaluator
