@@ -23,7 +23,7 @@ pip install spart-prompt
 Here's a quick example to get you started:
 
 ```python
-from spart import ExternalLLMConnector, PromptRecommender
+from spart_prompt import ExternalLLMConnector, PromptRecommender
 import pandas as pd
 
 # Connect to your LLM provider
