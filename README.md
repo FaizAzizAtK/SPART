@@ -20,7 +20,7 @@ pip install spart-prompt
 
 ## Quick Start
 
-Here's a quick example to get you started:
+Here's a quick example to get you started with PromptRecommender:
 
 ```python
 from spart_prompt import ExternalLLMConnector, PromptRecommender
@@ -72,6 +72,66 @@ results = recommender.recommend(
 )
 
 print(f"Recommended prompt: {results['recommended_prompt']}")
+print(f"Prompt outputs: {results['prompt_outputs']}")
+print(f"Semantic similarity: {results['semantic_similarity']}")
+print(f"Syntactic similarity: {results['syntactic_similarity']}")
+```
+
+Here's a quick example to get you started with PromptOptimizer:
+
+```python 
+from spart_prompt import ExternalLLMConnector, PromptOptimizer
+import pandas as pd
+
+# Connect to your LLM provider
+llm = ExternalLLMConnector(
+    provider="openai",
+    model_name="gpt-4o",
+    api_key="your_api_key_here",
+    temperature=0.7
+)
+
+# Create an optimizer
+optimizer = PromptOptimizer(llm)
+
+# Example data 
+examples = pd.DataFrame({
+    'inputs': [
+        "My name is John and I am 30 years old",
+        "Hello I'm Emma, age 25",
+        "Name's Sarah, I'm 29",
+        "I go by Alice, and I’m 22",
+        "It’s Tom here, aged 31",
+        "You can call me Linda, I’m 27",
+        "Hey, this is Mark and I’m 38"
+    ],
+    'desired_outputs': [
+        "Name: John, Age: 30",
+        "Name: Emma, Age: 25",
+        "Name: Sarah, Age: 29",
+        "Name: Alice, Age: 22",
+        "Name: Tom, Age: 31",
+        "Name: Linda, Age: 27",
+        "Name: Mark, Age: 38"
+    ]
+})
+
+# Initial prompt to optimize
+generated_prompt = "Extract the person's name and age from the text."
+
+# Optimize the prompt
+results = optimizer.optimize_prompt(
+    generated_prompt=generated_prompt,
+    examples=examples.to_dict("records"),
+    num_examples=1,
+    similarity_threshold=0.9,
+    context="Input contains a short sentence with a person's name and age. Extract both in the format 'Name: X, Age: Y'.",
+    max_iterations=3,
+    semantic_similarity=False,
+    syntactic_similarity=True
+)
+
+print(f"Optimized prompt: {results['optimized_prompt']}")
 print(f"Prompt outputs: {results['prompt_outputs']}")
 print(f"Semantic similarity: {results['semantic_similarity']}")
 print(f"Syntactic similarity: {results['syntactic_similarity']}")
