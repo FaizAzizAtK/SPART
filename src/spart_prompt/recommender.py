@@ -101,7 +101,7 @@ class PromptRecommender:
         Returns:
             dict: A dictionary containing the recommendation and evaluation metrics.
         """
-        dataframe = pd.DataFrame(examples)
+        dataframe = examples
 
         if num_examples > 0:
             input_column_for_prompt = dataframe.iloc[:num_examples, 0]
