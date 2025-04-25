@@ -60,12 +60,10 @@ class PromptOptimizer:
         Returns:
             dict: Optimized prompt and evaluation results.
         """
-        dataframe = examples
-
-        input_column_for_prompt = dataframe.iloc[:num_examples, 0].tolist()
-        output_column_for_prompt = dataframe.iloc[:num_examples, 1].tolist()
-        input_column_for_evaluation = dataframe.iloc[num_examples:, 0].tolist()
-        output_column_for_evaluation = dataframe.iloc[num_examples:, 1].tolist(
+        input_column_for_prompt = examples.iloc[:num_examples, 0].tolist()
+        output_column_for_prompt = examples.iloc[:num_examples, 1].tolist()
+        input_column_for_evaluation = examples.iloc[num_examples:, 0].tolist()
+        output_column_for_evaluation = examples.iloc[num_examples:, 1].tolist(
         )
 
         print("\n🔍 Evaluating Original Prompt...")
