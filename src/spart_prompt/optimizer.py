@@ -35,7 +35,7 @@ class PromptOptimizer:
 
     def optimize_prompt(
         self,
-        meta_prompt: str,
+        system_prompt: str,
         examples: pd.DataFrame,
         num_examples: int,
         threshold: float = 0.85,
@@ -48,7 +48,7 @@ class PromptOptimizer:
         Optimizes a system prompt by iteratively refining it based on evaluation metrics.
 
         Args:
-            meta_prompt (str): The initial system prompt.
+            system_prompt (str): The initial system prompt.
             examples (list): Input-output pairs (as a DataFrame).
             num_examples (int): Number of examples used for prompt refinement.
             threshold (float, optional): Similarity threshold for stopping optimization. Defaults to 0.85.
@@ -70,13 +70,13 @@ class PromptOptimizer:
 
         print("\n🔍 Evaluating Original Prompt...")
         orig_semantic_sim, orig_syntactic_sim, orig_evaluation = self.evaluator.evaluate_similarity(
-            input_column_for_evaluation, output_column_for_evaluation, meta_prompt, semantic_similarity, syntactic_similarity)
+            input_column_for_evaluation, output_column_for_evaluation, system_prompt, semantic_similarity, syntactic_similarity)
 
         print(
             f"📊 Original Prompt Evaluation:\n🔹 Semantic Similarity: {orig_semantic_sim}\n🔹 Syntactic Similarity: {orig_syntactic_sim}")
 
         attempt = 0
-        best_prompt = meta_prompt
+        best_prompt = system_prompt
         best_semantic_sim = orig_semantic_sim
         best_syntactic_sim = orig_syntactic_sim
         best_evaluation = orig_evaluation
@@ -168,7 +168,7 @@ class PromptOptimizer:
                     "optimized_prompt": optimized_prompt,
                     "semantic_similarity": new_semantic_sim,
                     "syntactic_similarity": new_syntactic_sim,
-                    "evaluation_details": new_evaluation
+                    "prompt_outputs": new_evaluation
                 }
 
             if new_semantic_sim > best_semantic_sim or new_syntactic_sim > best_syntactic_sim:
@@ -188,7 +188,7 @@ class PromptOptimizer:
                         "optimized_prompt": best_prompt,
                         "semantic_similarity": best_semantic_sim,
                         "syntactic_similarity": best_syntactic_sim,
-                        "evaluation_details": best_evaluation
+                        "prompt_outputs": best_evaluation
                     }
 
         print(
@@ -197,5 +197,5 @@ class PromptOptimizer:
             "optimized_prompt": best_prompt,
             "semantic_similarity": best_semantic_sim,
             "syntactic_similarity": best_syntactic_sim,
-            "evaluation_details": best_evaluation
+            "prompt_outputs": best_evaluation
         }
