@@ -85,7 +85,7 @@ class TestPromptOptimizer:
         
         # Call optimize_prompt
         result = optimizer.optimize_prompt(
-            meta_prompt="Original prompt",
+            system_prompt="Original prompt",
             examples=example_data,
             num_examples=2,
             threshold=0.85,
@@ -97,7 +97,7 @@ class TestPromptOptimizer:
         assert result["optimized_prompt"] == "Optimized system prompt"
         assert result["semantic_similarity"] == 0.9
         assert result["syntactic_similarity"] == 0.9
-        assert result["evaluation_details"] == ["optimized_output1", "optimized_output2"]
+        assert result["prompt_outputs"] == ["optimized_output1", "optimized_output2"]
         
         # Verify evaluator was called twice (once for original, once for optimized)
         assert optimizer.evaluator.evaluate_similarity.call_count == 2
@@ -125,7 +125,7 @@ class TestPromptOptimizer:
         
         # Call optimize_prompt
         result = optimizer.optimize_prompt(
-            meta_prompt="Original prompt",
+            system_prompt="Original prompt",
             examples=example_data,
             num_examples=2,
             threshold=0.85,
@@ -163,7 +163,7 @@ class TestPromptOptimizer:
         
         # Call optimize_prompt
         result = optimizer.optimize_prompt(
-            meta_prompt="Original prompt",
+            system_prompt="Original prompt",
             examples=example_data,
             num_examples=2,
             threshold=0.85,

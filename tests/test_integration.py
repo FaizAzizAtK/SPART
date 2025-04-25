@@ -116,7 +116,7 @@ class TestIntegration:
             test_prompt = "Original test prompt"
 
             optimized_result = optimizer.optimize_prompt(
-                meta_prompt=test_prompt,
+                system_prompt=test_prompt,
                 examples=example_data,
                 num_examples=2
             )
