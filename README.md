@@ -23,7 +23,7 @@ pip install spart-prompt
 Here's a quick example to get you started:
 
 ```python
-from spart-prompt import ExternalLLMConnector, PromptRecommender
+from spart import ExternalLLMConnector, PromptRecommender
 import pandas as pd
 
 # Connect to your LLM provider
@@ -72,6 +72,7 @@ results = recommender.recommend(
 )
 
 print(f"Recommended prompt: {results['recommended_prompt']}")
+print(f"Prompt outputs: {results['prompt_outputs']}")
 print(f"Semantic similarity: {results['semantic_similarity']}")
 print(f"Syntactic similarity: {results['syntactic_similarity']}")
 ```
