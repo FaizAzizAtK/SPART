@@ -60,7 +60,7 @@ class PromptOptimizer:
         Returns:
             dict: Optimized prompt and evaluation results.
         """
-        dataframe = pd.DataFrame(examples)
+        dataframe = examples
 
         input_column_for_prompt = dataframe.iloc[:num_examples, 0].tolist()
         output_column_for_prompt = dataframe.iloc[:num_examples, 1].tolist()
@@ -118,7 +118,7 @@ class PromptOptimizer:
                     </instructions>
 
                     <original_prompt>
-                        {meta_prompt}
+                        {system_prompt}
                     </original_prompt>
 
                     <good_examples>
