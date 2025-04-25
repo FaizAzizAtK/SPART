@@ -1,0 +1,38 @@
+name: Test Build
+
+on:
+  push:
+    branches:
+      - main  
+  workflow_dispatch:  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          # Running tests with pytest
+          pytest --maxfail=1 --disable-warnings -q
+
+      - name: Build distribution
+        run: |
+          python -m build  # This creates the distribution files (wheel and source distribution)
